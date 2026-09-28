@@ -31,8 +31,8 @@
                             900: '#0c4a6e',
                         },
                         hod: {
-                            red: '#cc0000',
-                            darkred: '#b30000',
+                            blue: '#cc0000',
+                            darkblue: '#b30000',
                             blue: '#1e3a8a'
                         }
                     }
@@ -49,14 +49,6 @@
         <div class="absolute inset-0 bg-white/80"></div>
     </div>
 
-    <!-- Top Red Banner -->
-    <div class="bg-hod-red text-white text-xs py-1.5 marquee-container flex items-center relative z-[60] font-medium tracking-wide">
-        <div class="marquee-content">
-            Get 10% Inaugural Discount at new <span class="underline font-bold">West Jyoti Nagar Durgapuri Chowk</span> centres by using this coupon code: INAUG10
-        </div>
-        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-white px-2 cursor-pointer z-10 hover:text-gray-200" onclick="this.parentElement.style.display='none'"><i class="fas fa-times"></i></button>
-    </div>
-
     <!-- Main Navigation Header -->
     <header class="fixed w-full top-[30px] z-50 bg-white border-b border-gray-200 shadow-sm transition-all flex flex-col justify-center">
         <!-- Row 1: Logo, Search, Contact, Login -->
@@ -70,7 +62,7 @@
                 </div>
 
                 <!-- Central Search Bar -->
-                <div class="hidden md:flex flex-grow max-w-xl lg:max-w-2xl w-full mx-auto items-center border border-gray-300 rounded-full bg-white overflow-hidden shadow-sm h-10 focus-within:ring-1 focus-within:ring-hod-red focus-within:border-hod-red transition relative">
+                <div class="hidden md:flex flex-grow max-w-xl lg:max-w-2xl w-full mx-auto items-center border border-gray-300 rounded-full bg-white overflow-hidden shadow-sm h-10 focus-within:ring-1 focus-within:ring-hod-blue focus-within:border-hod-blue transition relative">
                     <div class="relative border-r border-gray-300 flex-shrink-0">
                         <div class="flex items-center px-4 py-2 bg-white cursor-pointer hover:bg-gray-50 transition text-sm text-gray-600">
                             <span class="truncate w-20">South Delhi</span>
@@ -78,21 +70,21 @@
                         </div>
                     </div>
                     <input type="text" placeholder="Search Cen" class="flex-grow px-4 py-2 text-sm focus:outline-none w-full bg-transparent placeholder-gray-400">
-                    <button class="bg-hod-red text-white w-10 h-full flex items-center justify-center hover:bg-hod-darkred transition flex-shrink-0">
+                    <button class="bg-hod-blue text-white w-10 h-full flex items-center justify-center hover:bg-hod-blue transition flex-shrink-0">
                         <i class="fas fa-search text-sm"></i>
                     </button>
                 </div>
 
                 <!-- Right Side Actions -->
                 <div class="hidden lg:flex items-center gap-6">
-                    <a href="tel:18005715715" class="flex items-center text-gray-800 font-bold text-[15px] hover:text-hod-red transition">
-                        <i class="fas fa-phone-alt text-hod-red mr-2"></i>
+                    <a href="tel:18005715715" class="flex items-center text-gray-800 font-bold text-[15px] hover:text-hod-blue transition">
+                        <i class="fas fa-phone-alt text-hod-blue mr-2"></i>
                         1800 5 715 715
                     </a>
-                    <button class="text-gray-700 hover:text-hod-red text-xl transition">
+                    <button class="text-gray-700 hover:text-hod-blue text-xl transition">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
-                    <button class="border border-hod-red text-hod-red font-medium px-6 py-1 rounded hover:bg-red-50 transition text-sm shadow-sm">
+                    <button class="border border-hod-blue text-hod-blue font-medium px-6 py-1 rounded hover:bg-blue-50 transition text-sm shadow-sm">
                         Login
                     </button>
                 </div>
@@ -109,14 +101,14 @@
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full hidden lg:block">
             <div class="flex justify-between items-center py-2">
                 <nav class="flex space-x-8 items-center justify-center flex-grow pl-10">
-                    <a href="#home" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5">Home <i class="fas fa-chevron-down text-[10px] text-hod-red"></i></a>
-                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5">Locate Us <i class="fas fa-chevron-down text-[10px] text-hod-red"></i></a>
-                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5">Facilities <i class="fas fa-chevron-down text-[10px] text-hod-red"></i></a>
-                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5">Find A Test <i class="fas fa-chevron-down text-[10px] text-hod-red"></i></a>
-                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5">Health Packages <i class="fas fa-chevron-down text-[10px] text-hod-red"></i></a>
-                    <a href="#contact" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5">Reach Us <i class="fas fa-chevron-down text-[10px] text-hod-red"></i></a>
+                    <a href="#home" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-blue transition-colors flex items-center gap-1.5">Home <i class="fas fa-chevron-down text-[10px] text-hod-blue"></i></a>
+                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-blue transition-colors flex items-center gap-1.5">Locate Us <i class="fas fa-chevron-down text-[10px] text-hod-blue"></i></a>
+                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-blue transition-colors flex items-center gap-1.5">Facilities <i class="fas fa-chevron-down text-[10px] text-hod-blue"></i></a>
+                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-blue transition-colors flex items-center gap-1.5">Find A Test <i class="fas fa-chevron-down text-[10px] text-hod-blue"></i></a>
+                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-blue transition-colors flex items-center gap-1.5">Health Packages <i class="fas fa-chevron-down text-[10px] text-hod-blue"></i></a>
+                    <a href="#contact" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-blue transition-colors flex items-center gap-1.5">Reach Us <i class="fas fa-chevron-down text-[10px] text-hod-blue"></i></a>
                 </nav>
-                <button class="border border-hod-red text-hod-red font-medium px-4 py-1 rounded-full hover:bg-red-50 transition text-xs shadow-sm whitespace-nowrap">
+                <button class="border border-hod-blue text-hod-blue font-medium px-4 py-1 rounded-full hover:bg-blue-50 transition text-xs shadow-sm whitespace-nowrap">
                     Online Report
                 </button>
             </div>
@@ -126,10 +118,10 @@
     <!-- Mobile Navigation Dropdown -->
     <div id="mobile-menu" class="lg:hidden fixed top-[115px] left-0 w-full bg-white border-b border-gray-200 z-40 shadow-lg">
         <div class="px-4 py-4 space-y-2">
-            <a href="#home" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-red-50 hover:text-hod-red rounded-lg font-medium transition-colors">Home</a>
-            <a href="#services" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-red-50 hover:text-hod-red rounded-lg font-medium transition-colors">Locate Us / Facilities</a>
-            <a href="#appointment" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-red-50 hover:text-hod-red rounded-lg font-medium transition-colors">Find A Test / Packages</a>
-            <a href="#contact" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-red-50 hover:text-hod-red rounded-lg font-medium transition-colors">Reach Us</a>
+            <a href="#home" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-blue-50 hover:text-hod-blue rounded-lg font-medium transition-colors">Home</a>
+            <a href="#services" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-blue-50 hover:text-hod-blue rounded-lg font-medium transition-colors">Locate Us / Facilities</a>
+            <a href="#appointment" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-blue-50 hover:text-hod-blue rounded-lg font-medium transition-colors">Find A Test / Packages</a>
+            <a href="#contact" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-blue-50 hover:text-hod-blue rounded-lg font-medium transition-colors">Reach Us</a>
         </div>
     </div>
 
@@ -174,7 +166,7 @@
             <div class="text-center mb-16 max-w-3xl mx-auto">
                 <h2 class="text-brand-700 font-bold tracking-wider uppercase text-sm mb-2 bg-white/70 inline-block px-3 py-1 rounded-full shadow-sm border border-blue-100">Centers of Excellence</h2>
                 <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 drop-shadow-sm">Our Premium Services</h3>
-                <p class="text-gray-700 text-lg font-medium">Comprehensive medical care tailored to your specific needs.</p>
+                <p class="text-gray-700 text-lg font-medium">Comprehensive medical care tailoblue to your specific needs.</p>
             </div>
 
             <!-- Services Grid -->
@@ -195,10 +187,10 @@
                     </div>
                 </div>
 
-                <div class="bg-white/95 rounded-2xl shadow-md hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col h-full overflow-hidden border border-white" onclick="openBigCard('Cardiology', 'State-of-the-art heart care, ECG, echocardiography, and preventive cardiology by renowned heart specialists.', '₹2500', 'fa-heart-pulse')">
+                <div class="bg-white/95 rounded-2xl shadow-md hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col h-full overflow-hidden border border-white" onclick="openBigCard('Cardiology', 'State-of-the-art heart care, ECG, echocardiography, and preventive cardiology by renowned heart specialists.', '₹2500', 'fa-heart-pulse')">
                     <div class="p-8 flex-grow relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-red-50 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="w-16 h-16 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-red-500 group-hover:text-white transition-colors duration-300 shadow-sm relative z-10">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
+                        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300 shadow-sm relative z-10">
                             <i class="fa-solid fa-heart-pulse"></i>
                         </div>
                         <h4 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors">Cardiology</h4>
@@ -334,26 +326,26 @@
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Patient's Full Name</label>
                                 <div class="relative">
                                     <i class="fa-regular fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                    <input type="text" required placeholder="John Doe" class="w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 placeholder-gray-400 font-medium shadow-sm">
+                                    <input type="text" requiblue placeholder="John Doe" class="w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 placeholder-gray-400 font-medium shadow-sm">
                                 </div>
                             </div>
                             <div class="relative">
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-mobile-screen absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                    <input type="tel" required placeholder="(123) 456-7890" class="w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 placeholder-gray-400 font-medium shadow-sm">
+                                    <input type="tel" requiblue placeholder="(123) 456-7890" class="w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 placeholder-gray-400 font-medium shadow-sm">
                                 </div>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="relative">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Preferred Date</label>
-                                <input type="date" required id="form-date" class="w-full px-5 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium shadow-sm">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Preferblue Date</label>
+                                <input type="date" requiblue id="form-date" class="w-full px-5 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium shadow-sm">
                             </div>
                             <div class="relative">
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Select Department</label>
                                 <div class="relative">
-                                    <select required class="w-full pl-5 pr-12 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium appearance-none shadow-sm">
+                                    <select requiblue class="w-full pl-5 pr-12 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium appearance-none shadow-sm">
                                         <option value="" disabled selected>Choose service...</option>
                                         <option>Ophthalmology</option>
                                         <option>Cardiology</option>
@@ -414,7 +406,7 @@
                     </div>
                     <div class="p-6 text-center flex-grow flex flex-col justify-center relative">
                         <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                            <i class="fa-solid fa-heart-pulse text-red-500 text-xl"></i>
+                            <i class="fa-solid fa-heart-pulse text-blue-500 text-xl"></i>
                         </div>
                         <h4 class="text-xl font-bold text-gray-900 mt-4 mb-1 group-hover:text-brand-600 transition-colors">Dr. John Doe</h4>
                         <p class="text-brand-600 font-bold text-sm mb-2">Head of Cardiology</p>
