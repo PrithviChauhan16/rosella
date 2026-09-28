@@ -1,4 +1,4 @@
-// Database of full details for tests and health packages
+// Comprehensive Database of full details for tests and health packages
 const hodDatabase = {
     // Tests
     "pet-ct": {
@@ -49,6 +49,23 @@ const hodDatabase = {
         tat: "Same Day*",
         specializations: ["Radiology", "Gastroenterology", "Urology"]
     },
+    "lipid-profile": {
+        title: "Lipid Profile",
+        subtitle: "Pathology | Heart Health",
+        origPrice: "₹650",
+        price: "₹400",
+        alsoKnownAs: ["Cholesterol Panel", "Coronary Risk Profile", "Lipid Panel Test"],
+        description: "A lipid profile is a blood test that measures the amount of cholesterol and triglycerides in your blood to determine your risk of cardiovascular disease.",
+        parametersCount: "8 Test Parameters",
+        parameters: [
+            { name: "Cholesterol Levels", count: "4 Parameters", desc: "Total Cholesterol, HDL (Good) Cholesterol, LDL (Bad) Cholesterol, VLDL Cholesterol." },
+            { name: "Triglycerides & Ratios", count: "4 Parameters", desc: "Total Triglycerides, TC/HDL Ratio, LDL/HDL Ratio, Non-HDL Cholesterol." }
+        ],
+        preparation: "Overnight fasting (10-12 hours) is strictly recommended.",
+        tat: "Same Day*",
+        specializations: ["Cardiology", "General Health", "Preventive Care"]
+    },
+    
     // Packages
     "total-care": {
         title: "Total Care Checkup",
@@ -56,7 +73,7 @@ const hodDatabase = {
         origPrice: "₹3998",
         price: "₹1999",
         alsoKnownAs: ["Total Care", "Full Body Checkup Total Care", "Total Care Tests", "Whole Body Health 1999 Package", "Preventive Health Checkup"],
-        description: "Total Care Checkup is one of the most popular health checkup packages at HOD. It consists of a range of tests to provide insight about the vital parameters of your health. The checkup includes tests such as Kidney Function Test, Liver Function Test, HbA1c, Vitamin D, Vitamin B12, Thyroid Function Tests, and several more tests.",
+        description: "Total Care Checkup is one of the most popular health checkup packages at Dr. OPG. It consists of a range of tests to provide insight about the vital parameters of your health. The checkup includes tests such as Kidney Function Test, Liver Function Test, HbA1c, Vitamin D, Vitamin B12, Thyroid Function Tests, and several more.",
         parametersCount: "87 Test Parameters",
         parameters: [
             { name: "CBC", count: "22 Parameters", desc: "Complete Hemogram, Platelets, Leucocyte count, Hemoglobin." },
