@@ -60,7 +60,9 @@ const hodDatabase = {
             { name: "Glucose Fasting", count: "1 Parameter", desc: "Blood Sugar Fasting." },
             { name: "Lipid Profile", count: "8 Parameters", desc: "Total Cholesterol, HDL, LDL, VLDL, Triglycerides, Cholesterol ratios." },
             { name: "Iron Profile", count: "3 Parameters", desc: "Serum Iron, TIBC, Transferrin Saturation." },
-            { name: "Free Thyroid Test [FT3,FT4,TSH]", count: "3 Parameters", desc: "Free T3, Free T4, Ultrasensitive TSH." }
+            { name: "Free Thyroid Test [FT3,FT4,TSH]", count: "3 Parameters", desc: "Free T3, Free T4, Ultrasensitive TSH." },
+            { name: "ESR", count: "1 Parameter", desc: "Erythrocyte Sedimentation Rate." },
+            { name: "Urine R/M", count: "22 Parameters", desc: "Physical, Chemical, and Microscopic urine evaluation." }
         ],
         preparation: "Overnight Fasting is Preferred (10-12 hours).",
         tat: "Same Day*", specializations: ["Health Checkup", "Preventive Health Checkups"]
@@ -72,7 +74,10 @@ const hodDatabase = {
         parametersCount: "99 Test Parameters",
         parameters: [
             { name: "Prostate-Specific Antigen (Total PSA)", count: "1 Parameter", desc: "Prostate enlargement and prostate cancer screening marker." },
-            { name: "Liver & Kidney Profiles", count: "20 Parameters", desc: "Bilirubin, SGOT, SGPT, Creatinine, Urea, Electrolytes." }
+            { name: "Cardiac Risk Markers", count: "5 Parameters", desc: "Apolipoprotein A1, B, hs-CRP, Homocysteine." },
+            { name: "Arthritis & Bone Profile", count: "4 Parameters", desc: "Calcium, Phosphorus, Uric Acid, Vitamin D3." },
+            { name: "Liver & Kidney Profiles (LFT & KFT)", count: "20 Parameters", desc: "Bilirubin, SGOT, SGPT, Creatinine, Urea, Electrolytes." },
+            { name: "Complete Hemogram (CBC)", count: "22 Parameters", desc: "Full blood cell count, ESR, and platelets." }
         ],
         preparation: "Overnight Fasting for 10 to 12 hours is mandatory.",
         tat: "Same Day*", specializations: ["Senior Care", "Preventive Health Checkups", "Urology"]
@@ -83,8 +88,11 @@ const hodDatabase = {
         description: "Tailored screening designed for the health needs of senior women. Includes post-menopausal bone density and osteoporosis markers, thyroid profile, Vitamin D3 and B12, rheumatoid factor, and complete vital organs assessment.",
         parametersCount: "97 Test Parameters",
         parameters: [
-            { name: "Bone Health & Osteoporosis Profile", count: "5 Parameters", desc: "Serum Calcium, Phosphorus, Alkaline Phosphatase, Vitamin D3." },
-            { name: "Thyroid & Hormone Profile", count: "3 Parameters", desc: "Free T3, Free T4, Sensitive TSH." }
+            { name: "Bone Health & Osteoporosis Profile", count: "5 Parameters", desc: "Serum Calcium, Phosphorus, Alkaline Phosphatase, Vitamin D3 25-OH." },
+            { name: "Thyroid & Hormone Profile", count: "3 Parameters", desc: "Free T3, Free T4, Sensitive TSH." },
+            { name: "Rheumatoid Factor (RA Factor)", count: "1 Parameter", desc: "Arthritis and joint inflammation diagnostic." },
+            { name: "Liver & Renal Profiles", count: "20 Parameters", desc: "Liver enzymes, Total protein, Creatinine, Blood Urea Nitrogen, Uric Acid." },
+            { name: "Complete Blood Count & ESR", count: "23 Parameters", desc: "Full blood cell evaluation with inflammatory markers." }
         ],
         preparation: "Overnight Fasting for 10 to 12 hours is mandatory.",
         tat: "Same Day*", specializations: ["Senior Care", "Women's Health"]
