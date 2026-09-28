@@ -100,19 +100,63 @@
             </div>
         </div>
 
-        <!-- Row 2: Secondary Links -->
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full hidden lg:block">
+<!-- Row 2: Secondary Nav Links -->
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full hidden lg:block relative z-40">
             <div class="flex justify-between items-center py-2">
                 <nav class="flex space-x-8 items-center justify-center flex-grow pl-10">
-                    <a href="#home" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Home <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
-                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Locate Us <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
-                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Facilities <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
-                    <a href="#popular-tests" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Find A Test <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
-                    <a href="#health-packages" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Health Packages <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
-                    <a href="#doctors" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Our Doctors <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
-                    <a href="#contact" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Reach Us <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                    
+                    <a href="#home" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors">Home</a>
+                    
+                    <!-- Locate Us with Hover Dropdown -->
+                    <div class="relative group">
+                        <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5 pb-2">
+                            Locate Us <i class="fas fa-chevron-down text-[10px] text-hod-red transition-transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="absolute left-0 top-full w-48 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100 transform translate-y-2 group-hover:translate-y-0 overflow-hidden">
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">West Jyoti Nagar</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red">South Delhi</a>
+                        </div>
+                    </div>
+
+                    <!-- Facilities with Hover Dropdown -->
+                    <div class="relative group">
+                        <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5 pb-2">
+                            Facilities <i class="fas fa-chevron-down text-[10px] text-hod-red transition-transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="absolute left-0 top-full w-48 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100 transform translate-y-2 group-hover:translate-y-0 overflow-hidden">
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">Advanced MRI</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">Digital X-Ray</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red">Blood Collection</a>
+                        </div>
+                    </div>
+
+                    <!-- Find A Test with Hover Dropdown -->
+                    <div class="relative group">
+                        <a href="#popular-tests" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5 pb-2">
+                            Find A Test <i class="fas fa-chevron-down text-[10px] text-hod-red transition-transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="absolute left-0 top-full w-56 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100 transform translate-y-2 group-hover:translate-y-0 overflow-hidden">
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">Blood Tests</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">Radiology (X-Ray/MRI)</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red">Cardiology (ECG/ECHO)</a>
+                        </div>
+                    </div>
+
+                    <!-- Health Packages with Hover Dropdown -->
+                    <div class="relative group">
+                        <a href="#health-packages" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors flex items-center gap-1.5 pb-2">
+                            Health Packages <i class="fas fa-chevron-down text-[10px] text-hod-red transition-transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="absolute left-0 top-full w-64 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100 transform translate-y-2 group-hover:translate-y-0 overflow-hidden">
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">Total Care Checkup</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red border-b border-gray-50">Senior Citizen (Male)</a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-hod-red">Senior Citizen (Female)</a>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="nav-link text-gray-800 text-sm font-semibold hover:text-hod-red transition-colors">Reach Us</a>
                 </nav>
-                <button class="border border-brand-600 text-brand-600 font-medium px-4 py-1 rounded-full hover:bg-red-50 transition text-xs shadow-sm whitespace-nowrap">
+                <button class="border border-hod-red text-hod-red font-medium px-4 py-1.5 rounded-full hover:bg-red-50 transition text-xs shadow-sm whitespace-nowrap">
                     Online Report
                 </button>
             </div>
@@ -694,6 +738,48 @@
                         loading="lazy" 
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Clinic Photos & Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-50 border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-brand-700 font-bold tracking-wider uppercase text-sm mb-2 bg-white inline-block px-3 py-1 rounded-full border border-gray-200 shadow-sm">Take a Tour</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Clinic Photos & Facilities</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">A glimpse into our state-of-the-art diagnostic equipment and comfortable waiting areas.</p>
+            </div>
+
+            <!-- Photo Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Image 1 -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer aspect-square">
+                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Reception" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <!-- Image 2 -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer aspect-square">
+                    <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Laboratory" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <!-- Image 3 -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer aspect-square">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="MRI Machine" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <!-- Image 4 -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer aspect-square">
+                    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Consultation Room" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <!-- Image 5 (Wide) -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer col-span-2 md:col-span-2 aspect-[2/1]">
+                    <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Hospital Wing" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <!-- Image 6 -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer aspect-square hidden md:block">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Doctor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <!-- Image 7 -->
+                <div class="overflow-hidden rounded-2xl shadow-sm border border-gray-100 group cursor-pointer aspect-square hidden lg:block">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Staff" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
             </div>
         </div>
