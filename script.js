@@ -1,22 +1,134 @@
+// Database of full details for tests and health packages
+const hodDatabase = {
+    // Tests
+    "pet-ct": {
+        title: "Whole Body PET-CT Scan (FDG)",
+        subtitle: "Radiology | Molecular Imaging",
+        origPrice: "₹18000",
+        price: "₹11999",
+        alsoKnownAs: ["PET Scan Whole Body", "FDG PET CT", "Whole Body Cancer Screening"],
+        description: "A Whole Body PET-CT scan combines Positron Emission Tomography (PET) and Computed Tomography (CT) into a single device to pinpoint biochemical changes and exact anatomical structures.",
+        parametersCount: "1 Procedure Parameter",
+        parameters: [
+            { name: "Full Body FDG Molecular Scan", count: "1 Parameter", desc: "Covers skull base to mid-thigh or whole body as clinically advised." }
+        ],
+        preparation: "Overnight fasting (minimum 6 hours). Blood glucose level must be under 150 mg/dL prior to radiotracer injection.",
+        tat: "Same Day*",
+        specializations: ["Oncology", "Nuclear Medicine", "Cancer Screening"]
+    },
+    "cbc": {
+        title: "CBC Test",
+        subtitle: "Pathology | Complete Blood Count",
+        origPrice: "₹350",
+        price: "₹199",
+        alsoKnownAs: ["Complete Blood Count", "Hemogram", "CBC with ESR"],
+        description: "A Complete Blood Count measures different components of blood, including Red Blood Cells, White Blood Cells, Hemoglobin, Hematocrit, and Platelets to detect infections, anemia, and immune disorders.",
+        parametersCount: "22 Test Parameters",
+        parameters: [
+            { name: "Hemoglobin & RBC Count", count: "4 Parameters", desc: "Hb, RBC, PCV / Hematocrit, MCV, MCH, MCHC, RDW." },
+            { name: "Total & Differential Leucocyte Count (TLC / DLC)", count: "6 Parameters", desc: "Neutrophils, Lymphocytes, Monocytes, Eosinophils, Basophils." },
+            { name: "Platelet Indices", count: "3 Parameters", desc: "Total Platelet Count, MPV, Plateletcrit." }
+        ],
+        preparation: "No specific fasting required. Normal hydration is recommended.",
+        tat: "Same Day*",
+        specializations: ["General Health", "Infection Screening", "Hematology"]
+    },
+    "ultrasound-abdomen": {
+        title: "Ultrasound Whole Abdomen",
+        subtitle: "Radiology | USG Imaging",
+        origPrice: "₹1600",
+        price: "₹999",
+        alsoKnownAs: ["USG Abdomen", "Abdominal Sonography", "USG Whole Abdomen & Pelvis"],
+        description: "High-frequency sound waves are used to evaluate organs in the abdomen, including the liver, gallbladder, spleen, pancreas, kidneys, urinary bladder, and prostate/uterus.",
+        parametersCount: "1 Scan Protocol",
+        parameters: [
+            { name: "Hepato-Biliary & Pancreatic Evaluation", count: "1 Scan", desc: "Liver size/texture, gallbladder stones/wall, bile ducts, and pancreas." },
+            { name: "Renal & Pelvic Evaluation", count: "1 Scan", desc: "Both kidneys, urinary bladder, prostate in males, uterus/adnexa in females." }
+        ],
+        preparation: "Fasting for 4 to 6 hours. Full urinary bladder required for pelvis evaluation (drink 1 liter of water 1 hour prior).",
+        tat: "Same Day*",
+        specializations: ["Radiology", "Gastroenterology", "Urology"]
+    },
+    // Packages
+    "total-care": {
+        title: "Total Care Checkup",
+        subtitle: "Health Package | Health Checkup",
+        origPrice: "₹3998",
+        price: "₹1999",
+        alsoKnownAs: ["Total Care", "Full Body Checkup Total Care", "Total Care Tests", "Whole Body Health 1999 Package", "Preventive Health Checkup"],
+        description: "Total Care Checkup is one of the most popular health checkup packages at HOD. It consists of a range of tests to provide insight about the vital parameters of your health. The checkup includes tests such as Kidney Function Test, Liver Function Test, HbA1c, Vitamin D, Vitamin B12, Thyroid Function Tests, and several more tests.",
+        parametersCount: "87 Test Parameters",
+        parameters: [
+            { name: "CBC", count: "22 Parameters", desc: "Complete Hemogram, Platelets, Leucocyte count, Hemoglobin." },
+            { name: "Glucose Fasting", count: "1 Parameter", desc: "Blood Sugar Fasting." },
+            { name: "Lipid Profile", count: "8 Parameters", desc: "Total Cholesterol, HDL, LDL, VLDL, Triglycerides, Cholesterol ratios." },
+            { name: "Iron Profile", count: "3 Parameters", desc: "Serum Iron, Total Iron Binding Capacity (TIBC), Transferrin Saturation." },
+            { name: "Hb A1c", count: "2 Parameters", desc: "Glycosylated Hemoglobin, Estimated Average Glucose." },
+            { name: "Free Thyroid Test [FT3,FT4,TSH]", count: "3 Parameters", desc: "Free T3, Free T4, Ultrasensitive TSH." },
+            { name: "ESR", count: "1 Parameter", desc: "Erythrocyte Sedimentation Rate." },
+            { name: "Urine R/M", count: "22 Parameters", desc: "Physical, Chemical, and Microscopic urine evaluation." }
+        ],
+        preparation: "Overnight Fasting is Preferred (10-12 hours).",
+        tat: "Same Day*",
+        specializations: ["Health Checkup", "Preventive Health Checkups"]
+    },
+    "senior-male": {
+        title: "Senior Citizen Checkup - Male",
+        subtitle: "Health Package | Senior Health Checkup",
+        origPrice: "₹8999",
+        price: "₹4999",
+        alsoKnownAs: ["Senior Male Checkup", "Geriatric Care Male", "Elderly Health Male Checkup"],
+        description: "Comprehensive geriatric screening tailored specifically for senior men. It covers extensive cardiac evaluation markers, PSA (Prostate-Specific Antigen), bone health vitamins, arthritis profiling, liver, kidney, and metabolic markers.",
+        parametersCount: "99 Test Parameters",
+        parameters: [
+            { name: "Prostate-Specific Antigen (Total PSA)", count: "1 Parameter", desc: "Prostate enlargement and prostate cancer screening marker." },
+            { name: "Cardiac Risk Markers", count: "5 Parameters", desc: "Apolipoprotein A1, B, hs-CRP, Homocysteine." },
+            { name: "Arthritis & Bone Profile", count: "4 Parameters", desc: "Calcium, Phosphorus, Uric Acid, Vitamin D3." },
+            { name: "Liver & Kidney Profiles (LFT & KFT)", count: "20 Parameters", desc: "Bilirubin, SGOT, SGPT, Creatinine, Urea, Electrolytes." },
+            { name: "Complete Hemogram (CBC)", count: "22 Parameters", desc: "Full blood cell count, ESR, and platelets." }
+        ],
+        preparation: "Overnight Fasting for 10 to 12 hours is mandatory. Drink only plain water.",
+        tat: "Same Day*",
+        specializations: ["Senior Care", "Preventive Health Checkups", "Urology"]
+    },
+    "senior-female": {
+        title: "Senior Citizen Checkup - Female",
+        subtitle: "Health Package | Senior Health Checkup",
+        origPrice: "₹8999",
+        price: "₹4999",
+        alsoKnownAs: ["Senior Female Checkup", "Geriatric Care Female", "Elderly Health Female Checkup"],
+        description: "Tailored screening designed for the health needs of senior women. Includes post-menopausal bone density and osteoporosis markers, thyroid profile, Vitamin D3 and B12, rheumatoid factor, and complete vital organs assessment.",
+        parametersCount: "97 Test Parameters",
+        parameters: [
+            { name: "Bone Health & Osteoporosis Profile", count: "5 Parameters", desc: "Serum Calcium, Phosphorus, Alkaline Phosphatase, Vitamin D3 25-OH." },
+            { name: "Thyroid & Hormone Profile", count: "3 Parameters", desc: "Free T3, Free T4, Sensitive TSH." },
+            { name: "Rheumatoid Factor (RA Factor)", count: "1 Parameter", desc: "Arthritis and joint inflammation diagnostic." },
+            { name: "Liver & Renal Profiles", count: "20 Parameters", desc: "Liver enzymes, Total protein, Creatinine, Blood Urea Nitrogen, Uric Acid." },
+            { name: "Complete Blood Count & ESR", count: "23 Parameters", desc: "Full blood cell evaluation with inflammatory markers." }
+        ],
+        preparation: "Overnight Fasting for 10 to 12 hours is mandatory. Water is allowed.",
+        tat: "Same Day*",
+        specializations: ["Senior Care", "Women's Health", "Preventive Health Checkups"]
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Logic
+    // Mobile menu toggle
     const mobileBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     if (mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-        });
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => mobileMenu.classList.remove('open'));
         });
     }
 
-    // Booking Form Logic
+    // Booking form logic
     const formDate = document.getElementById('form-date');
-    if(formDate) formDate.setAttribute('min', new Date().toISOString().split('T')[0]);
+    if (formDate) formDate.setAttribute('min', new Date().toISOString().split('T')[0]);
 
     const form = document.getElementById('booking-form');
-    if(form) {
+    if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const msg = document.getElementById('form-success-msg');
@@ -26,74 +138,118 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // WhatsApp Drag Logic
+    // Draggable WhatsApp logic
     const waBtn = document.getElementById('wa-button');
-    let isDragging = false;
-    let startX, startY, initialX, initialY, startTime;
+    if (waBtn) {
+        let isDragging = false;
+        let startX, startY, initialX, initialY, startTime;
 
-    const startDrag = (e) => {
-        const evt = e.type.includes('mouse') ? e : e.touches[0];
-        startX = evt.clientX;
-        startY = evt.clientY;
-        const rect = waBtn.getBoundingClientRect();
-        initialX = rect.left;
-        initialY = rect.top;
-        isDragging = false;
-        startTime = Date.now();
+        const startDrag = (e) => {
+            const evt = e.type.includes('mouse') ? e : e.touches[0];
+            startX = evt.clientX;
+            startY = evt.clientY;
+            const rect = waBtn.getBoundingClientRect();
+            initialX = rect.left;
+            initialY = rect.top;
+            isDragging = false;
+            startTime = Date.now();
 
-        if(e.type.includes('mouse')) {
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', endDrag);
-        } else {
-            document.addEventListener('touchmove', drag, { passive: false });
-            document.addEventListener('touchend', endDrag);
-        }
-    };
+            if (e.type.includes('mouse')) {
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', endDrag);
+            } else {
+                document.addEventListener('touchmove', drag, { passive: false });
+                document.addEventListener('touchend', endDrag);
+            }
+        };
 
-    const drag = (e) => {
-        const evt = e.type.includes('mouse') ? e : e.touches[0];
-        const dx = evt.clientX - startX;
-        const dy = evt.clientY - startY;
+        const drag = (e) => {
+            const evt = e.type.includes('mouse') ? e : e.touches[0];
+            const dx = evt.clientX - startX;
+            const dy = evt.clientY - startY;
 
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) isDragging = true;
+            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) isDragging = true;
 
-        if (isDragging) {
-            if(e.cancelable) e.preventDefault();
-            let newLeft = Math.max(0, Math.min(initialX + dx, window.innerWidth - waBtn.offsetWidth));
-            let newTop = Math.max(0, Math.min(initialY + dy, window.innerHeight - waBtn.offsetHeight));
-            waBtn.style.left = `${newLeft}px`;
-            waBtn.style.top = `${newTop}px`;
-            waBtn.style.bottom = 'auto';
-            waBtn.style.right = 'auto';
-        }
-    };
+            if (isDragging) {
+                if (e.cancelable) e.preventDefault();
+                let newLeft = Math.max(0, Math.min(initialX + dx, window.innerWidth - waBtn.offsetWidth));
+                let newTop = Math.max(0, Math.min(initialY + dy, window.innerHeight - waBtn.offsetHeight));
+                waBtn.style.left = `${newLeft}px`;
+                waBtn.style.top = `${newTop}px`;
+                waBtn.style.bottom = 'auto';
+                waBtn.style.right = 'auto';
+            }
+        };
 
-    const endDrag = (e) => {
-        document.removeEventListener('mousemove', drag);
-        document.removeEventListener('mouseup', endDrag);
-        document.removeEventListener('touchmove', drag);
-        document.removeEventListener('touchend', endDrag);
-        if (!isDragging && (Date.now() - startTime) < 400) {
-            window.open('https://wa.me/919911014950?text=Hello.', '_blank');
-        }
-    };
+        const endDrag = () => {
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', endDrag);
+            if (!isDragging && (Date.now() - startTime) < 400) {
+                window.open('https://wa.me/919911014950?text=Hello%20Dr.%20OPG%20Diagnostics.', '_blank');
+            }
+        };
 
-    if(waBtn) {
         waBtn.addEventListener('mousedown', startDrag);
         waBtn.addEventListener('touchstart', startDrag, { passive: false });
     }
 });
 
-// ==========================================
-// BIG CARD MODAL LOGIC
-// ==========================================
-function openBigCard(title, desc, price, icon) {
-    document.getElementById('big-card-title').innerText = title;
-    document.getElementById('big-card-desc').innerText = desc;
-    document.getElementById('big-card-price').innerText = price;
-    document.getElementById('big-card-icon').className = `fa-solid ${icon} text-6xl text-brand-600`;
-    
-    const modal = document.getElementById('big-card-modal');
+// Horizontal carousel scrolling
+function scrollCarousel(id, direction) {
+    const container = document.getElementById(id + '-carousel');
+    if (container) {
+        const scrollAmount = window.innerWidth < 768 ? 320 : 420;
+        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+}
+
+// Open Big Card Details Modal
+function openDetailCard(key) {
+    const item = hodDatabase[key];
+    if (!item) return;
+
+    document.getElementById('detail-title').innerText = item.title;
+    document.getElementById('detail-subtitle').innerText = item.subtitle;
+    document.getElementById('detail-orig-price').innerText = item.origPrice;
+    document.getElementById('detail-price').innerText = item.price;
+    document.getElementById('detail-description').innerText = item.description;
+    document.getElementById('detail-prep-text').innerText = item.preparation;
+    document.getElementById('detail-tat-text').innerText = item.tat;
+    document.getElementById('detail-parameters-header').innerHTML = `Includes <span class="text-brand-600 font-bold">${item.parametersCount}</span>`;
+
+    // Also Known As Badges
+    const pillsContainer = document.getElementById('detail-also-known-as');
+    pillsContainer.innerHTML = item.alsoKnownAs.map(tag => 
+        `<span class="border border-brand-500 text-brand-600 text-xs px-3 py-1 rounded-full bg-red-50/50">${tag}</span>`
+    ).join('');
+
+    // Accordion Parameters List
+    const paramsContainer = document.getElementById('detail-parameters-list');
+    paramsContainer.innerHTML = item.parameters.map((param, index) => `
+        <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50/40">
+            <div onclick="toggleAccordion('param-acc-${index}')" class="flex justify-between items-center px-4 py-3 cursor-pointer hover:bg-gray-100 transition select-none">
+                <span class="font-bold text-gray-900 text-sm">${param.name}</span>
+                <div class="flex items-center gap-2 text-brand-600 font-semibold text-xs">
+                    <span>${param.count}</span>
+                    <i class="fas fa-chevron-down text-[10px] transition-transform duration-200" id="icon-param-acc-${index}"></i>
+                </div>
+            </div>
+            <div id="param-acc-${index}" class="hidden px-4 py-2.5 bg-white text-xs text-gray-600 border-t border-gray-100">
+                ${param.desc}
+            </div>
+        </div>
+    `).join('');
+
+    // Specializations Badges
+    const specsContainer = document.getElementById('detail-specializations');
+    specsContainer.innerHTML = item.specializations.map(spec => 
+        `<span class="border border-brand-500 text-brand-600 text-xs px-3 py-0.5 rounded-full">${spec}</span>`
+    ).join('');
+
+    // Open Modal
+    const modal = document.getElementById('hod-detail-modal');
     modal.classList.remove('hidden');
     setTimeout(() => {
         modal.classList.add('active');
@@ -101,15 +257,45 @@ function openBigCard(title, desc, price, icon) {
     }, 10);
 }
 
-function closeBigCard() {
-    const modal = document.getElementById('big-card-modal');
+function closeDetailCard() {
+    const modal = document.getElementById('hod-detail-modal');
     modal.classList.remove('active');
     document.body.classList.remove('modal-open');
     setTimeout(() => modal.classList.add('hidden'), 300);
 }
 
-// Close on background click
-window.addEventListener('click', (e) => {
-    const modal = document.getElementById('big-card-modal');
-    if (e.target === modal) closeBigCard();
-});
+// Toggle individual accordion items inside the big card
+function toggleAccordion(id) {
+    const el = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    if (el) {
+        el.classList.toggle('hidden');
+        if (icon) icon.classList.toggle('rotate-180');
+    }
+}
+
+// Pincode checker inside the big card
+function checkPincode() {
+    const input = document.getElementById('pincode-input');
+    const status = document.getElementById('pincode-status');
+    if (input && input.value.trim().length === 6) {
+        status.innerHTML = `Earliest Home Pickup @ <strong>${input.value}</strong>: Today within 60 minutes*`;
+        status.className = "text-xs font-bold text-green-700 mt-2";
+    } else {
+        status.innerHTML = "Please enter a valid 6-digit pincode";
+        status.className = "text-xs font-bold text-red-600 mt-2";
+    }
+}
+
+// Switch between Visit Centre and Home Collection tabs
+function selectVisitType(type) {
+    const btnCentre = document.getElementById('btn-visit-centre');
+    const btnHome = document.getElementById('btn-visit-home');
+    if (type === 'home') {
+        btnHome.className = "w-1/2 py-2.5 text-center font-bold text-xs bg-brand-600 text-white transition";
+        btnCentre.className = "w-1/2 py-2.5 text-center font-bold text-xs text-brand-600 bg-white hover:bg-gray-50 transition";
+    } else {
+        btnCentre.className = "w-1/2 py-2.5 text-center font-bold text-xs bg-brand-600 text-white transition";
+        btnHome.className = "w-1/2 py-2.5 text-center font-bold text-xs text-brand-600 bg-white hover:bg-gray-50 transition";
+    }
+}
