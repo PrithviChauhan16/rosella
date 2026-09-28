@@ -176,6 +176,7 @@
     <section id="popular-tests" class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
         <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Popular Tests</h2>
         
+        <!-- Left / Right Carousel Controls -->
         <button onclick="scrollCarousel('popular-tests', -1)" class="absolute left-2 top-[55%] transform -translate-y-1/2 z-20 w-10 h-10 bg-red-100 text-brand-600 rounded-full flex items-center justify-center shadow-md hover:bg-brand-600 hover:text-white transition">
             <i class="fas fa-chevron-left"></i>
         </button>
@@ -912,7 +913,7 @@
     <!-- ========================================================================= -->
     <!-- ORIGINAL CAREPLUS MODAL (For Services & Doctors)                          -->
     <!-- ========================================================================= -->
-    <div id="dynamic-modal" class="custom-modal fixed inset-0 z-[9000] flex items-center justify-center bg-gray-900/70 opacity-0 invisible">
+    <div id="dynamic-modal" class="custom-modal fixed inset-0 z-[9000] hidden bg-gray-900/70 opacity-0 invisible">
         <!-- Modal Content Container -->
         <div class="modal-content bg-white w-11/12 max-w-3xl rounded-2xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
             <!-- Close Button -->
@@ -948,9 +949,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Link to External JS -->
-    <script src="script.js"></script>
 
 </body>
 </html>
