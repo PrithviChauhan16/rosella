@@ -1,0 +1,25 @@
+/* Custom underline hover effect for Nav Links */
+.nav-link { position: relative; display: inline-block; padding-bottom: 2px; }
+.nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #cc0000; transition: width 0.3s ease-in-out; }
+.nav-link:hover::after { width: 100%; }
+
+/* Smooth reveal for mobile menu */
+#mobile-menu { transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+#mobile-menu.open { max-height: 500px; opacity: 1; }
+
+/* WhatsApp Button styles */
+#wa-button { touch-action: none; }
+
+/* Modal Transitions */
+.custom-modal { transition: opacity 0.3s ease, visibility 0.3s ease; }
+.custom-modal .modal-content { transition: transform 0.3s ease; transform: scale(0.95) translateY(10px); }
+.custom-modal.active { opacity: 1; visibility: visible; }
+.custom-modal.active .modal-content { transform: scale(1) translateY(0); }
+
+/* Hide scrollbar when modal is open */
+body.modal-open { overflow: hidden; }
+
+/* Marquee */
+.marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
+.marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+@keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
