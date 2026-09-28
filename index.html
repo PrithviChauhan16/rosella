@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarePlus Clinic | Advanced Healthcare</title>
+    <title>Dr. OPG Diagnostic Center</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,19 +18,21 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
+                        // HOD Red Theme
                         brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
+                            50: '#fdf2f2',
+                            100: '#fbe5e5',
+                            200: '#f6cece',
+                            500: '#e53e3e',
+                            600: '#cc0000', // Primary HOD Red
+                            700: '#b30000',
+                            800: '#8f0000',
+                            900: '#750000',
                         }
                     },
                     boxShadow: {
                         'card': '0 4px 15px rgba(0, 0, 0, 0.05)',
-                        'card-hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+                        'card-hover': '0 10px 25px rgba(0, 0, 0, 0.15)',
                     }
                 }
             }
@@ -38,628 +40,340 @@
     </script>
     
     <style>
-        /* Custom underline hover effect for Nav Links */
-        .nav-link {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 2px;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: #0284c7; /* brand-600 */
-            transition: width 0.3s ease-in-out;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        /* HOD Nav Links Hover Effect */
+        .nav-link { position: relative; display: inline-block; padding-bottom: 2px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #cc0000; transition: width 0.3s ease-in-out; }
+        .nav-link:hover::after { width: 100%; }
 
-        /* Smooth reveal for mobile menu */
-        #mobile-menu {
-            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        #mobile-menu.open {
-            max-height: 500px;
-            opacity: 1;
-        }
+        /* Mobile Menu */
+        #mobile-menu { transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        #mobile-menu.open { max-height: 500px; opacity: 1; }
 
-        /* WhatsApp Button styles */
-        #wa-button {
-            touch-action: none;
-        }
+        /* General UI Styles */
+        #wa-button { touch-action: none; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
         
         /* Modal Transitions */
-        .custom-modal {
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .custom-modal .modal-content {
-            transition: transform 0.3s ease;
-            transform: scale(0.95) translateY(10px);
-        }
-        .custom-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .custom-modal.active .modal-content {
-            transform: scale(1) translateY(0);
-        }
-        body.modal-open {
-            overflow: hidden;
-        }
+        .custom-modal { transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .custom-modal .modal-content { transition: transform 0.3s ease; transform: scale(0.95) translateY(10px); }
+        .custom-modal.active { opacity: 1; visibility: visible; }
+        .custom-modal.active .modal-content { transform: scale(1) translateY(0); }
+        body.modal-open { overflow: hidden; }
 
-        /* HOD Features CSS */
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100%;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 25s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .hide-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        #cart-sidebar {
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        #cart-sidebar.open {
-            transform: translateX(0);
-        }
-        .toast-enter {
-            animation: slideInRight 0.3s forwards;
-        }
-        .toast-leave {
-            animation: slideOutRight 0.3s forwards;
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
+        /* Marquee */
+        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
+        .marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Cart Sidebar */
+        #cart-sidebar { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        #cart-sidebar.open { transform: translateX(0); }
+        
+        /* Toasts */
+        .toast-enter { animation: slideInRight 0.3s forwards; }
+        .toast-leave { animation: slideOutRight 0.3s forwards; }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
     </style>
 </head>
 <body class="font-sans text-gray-800 antialiased overflow-x-hidden relative bg-gray-50">
-    
-    <!-- PERFORMANCE FIX: Removed backdrop-blur. Applied blur and scale directly to the image layer -->
-    <div class="fixed inset-0 z-[-2] overflow-hidden pointer-events-none">
-        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm scale-110" style="background-image: url('REPLACE_WITH_YOUR_GLOBAL_BG_URL');"></div>
-        <div class="absolute inset-0 bg-white/80"></div>
-    </div>
 
-    <!-- Top Scrolling Bar (HOD Feature) -->
-    <div class="bg-brand-700 text-white text-xs py-1.5 marquee-container flex items-center relative z-[60]">
+    <!-- Top Red Banner -->
+    <div class="bg-brand-600 text-white text-xs py-2 marquee-container flex items-center relative z-[60]">
         <div class="marquee-content font-medium">
-            Welcome to <span class="underline font-bold">CarePlus Diagnostic Center</span>. High-quality diagnostics and healthcare. Get special discounts on selected health packages today!
+            Get 10% Inaugural Discount at <span class="underline font-bold">West Jyoti Nagar Durgapuri Chowk</span> centres by using this coupon code: INAUG10
         </div>
+        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-brand-600 px-2 cursor-pointer z-10"><i class="fas fa-times"></i></button>
     </div>
 
-    <!-- Header Navigation (Merged with HOD Features) -->
-    <header class="fixed w-full top-6 z-50 bg-white/95 border-b border-gray-200/50 shadow-sm transition-all py-2 flex flex-col justify-center">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="flex flex-wrap lg:flex-nowrap justify-between items-center h-full gap-4">
+    <!-- HOD Style Navigation Bar -->
+    <header class="fixed w-full top-[32px] z-50 bg-white border-b border-gray-200 shadow-sm transition-all flex flex-col justify-center">
+        <!-- Row 1: Logo, Search, Contact, Login -->
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full border-b border-gray-100">
+            <div class="flex flex-wrap lg:flex-nowrap justify-between items-center py-4 gap-4">
                 
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <div class="w-8 h-8 bg-brand-600 rounded flex items-center justify-center mr-3 text-white shadow-md">
-                        <i class="fa-solid fa-plus text-base"></i>
-                    </div>
-                    <span class="font-bold text-xl text-gray-900 tracking-tight">Care<span class="text-brand-600">Plus</span></span>
+                <div class="flex-shrink-0 flex flex-col items-center justify-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="text-brand-600 text-3xl font-bold font-serif tracking-widest leading-none">H<span class="mx-1 text-gray-400">•</span>O<span class="mx-1 text-gray-400">•</span>D</div>
+                    <div class="text-[8px] tracking-[0.2em] font-semibold text-gray-500 uppercase mt-1">House Of Diagnostics</div>
                 </div>
 
-                <!-- Search & Location (HOD Feature) -->
-                <div class="hidden md:flex flex-grow max-w-xl w-full mx-auto items-center border border-gray-300 rounded-full bg-white overflow-visible shadow-sm focus-within:ring-1 focus-within:ring-brand-600 focus-within:border-brand-600 transition relative">
-                    <div class="relative">
-                        <div id="location-selector" class="flex items-center px-4 py-2 bg-white cursor-pointer min-w-[140px] rounded-l-full hover:bg-gray-50 transition">
-                            <span id="selected-location" class="text-sm text-gray-700 truncate w-24">Main Center</span>
-                            <i class="fas fa-chevron-down text-gray-400 ml-2 text-xs transition-transform duration-200" id="location-icon"></i>
-                        </div>
-                        <div id="location-dropdown" class="hidden absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50 py-2">
-                            <ul class="text-sm text-gray-700">
-                                <li class="px-4 py-2 hover:bg-brand-50 hover:text-brand-600 cursor-pointer transition">Main Center</li>
-                                <li class="px-4 py-2 hover:bg-brand-50 hover:text-brand-600 cursor-pointer transition">North Branch</li>
-                                <li class="px-4 py-2 hover:bg-brand-50 hover:text-brand-600 cursor-pointer transition">South Clinic</li>
-                            </ul>
+                <!-- Central Search Bar -->
+                <div class="hidden md:flex flex-grow max-w-2xl w-full mx-auto items-center border border-gray-300 rounded-full bg-white overflow-visible shadow-sm focus-within:ring-1 focus-within:ring-brand-600 focus-within:border-brand-600 transition relative">
+                    <div class="relative border-r border-gray-300 flex-shrink-0">
+                        <div id="location-selector" class="flex items-center px-5 py-2.5 bg-white cursor-pointer rounded-l-full hover:bg-gray-50 transition text-sm text-gray-600">
+                            <span id="selected-location" class="truncate w-24">South Delhi</span>
+                            <i class="fas fa-crosshairs text-gray-400 ml-3"></i>
                         </div>
                     </div>
-                    <div class="h-6 w-px bg-gray-300"></div>
-                    <input type="text" id="main-search-input" placeholder="Search tests, packages, doctors..." class="flex-grow px-4 py-2 text-sm focus:outline-none w-full bg-transparent" onkeypress="handleSearch(event)">
-                    <button onclick="executeSearch()" class="bg-brand-600 text-white w-9 h-9 rounded-full flex items-center justify-center mr-1 hover:bg-brand-700 transition flex-shrink-0">
+                    <input type="text" id="main-search-input" placeholder="Search Cen..." class="flex-grow px-5 py-2.5 text-sm focus:outline-none w-full bg-transparent placeholder-gray-400">
+                    <button onclick="executeSearch()" class="bg-brand-600 text-white w-10 h-10 rounded-full flex items-center justify-center mr-1.5 hover:bg-brand-700 transition flex-shrink-0 shadow-sm">
                         <i class="fas fa-search text-sm"></i>
                     </button>
                 </div>
 
-                <!-- Desktop Navigation + HOD Actions -->
-                <nav class="hidden lg:flex space-x-6 items-center">
-                    <a href="#services" class="nav-link text-gray-900 text-sm font-semibold hover:text-brand-600 transition-colors">Services</a>
-                    <a href="#popular-tests" class="nav-link text-gray-900 text-sm font-semibold hover:text-brand-600 transition-colors">Tests</a>
-                    <a href="#health-packages" class="nav-link text-gray-900 text-sm font-semibold hover:text-brand-600 transition-colors">Packages</a>
-                    <a href="#doctors" class="nav-link text-gray-900 text-sm font-semibold hover:text-brand-600 transition-colors">Doctors</a>
-                    
-                    <button onclick="toggleCart()" class="text-gray-700 hover:text-brand-600 text-xl relative ml-4">
+                <!-- Right Side Actions -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="tel:18005715715" class="flex items-center text-gray-800 font-bold text-lg hover:text-brand-600 transition">
+                        <i class="fas fa-phone-alt text-brand-600 mr-2 text-xl"></i>
+                        1800 5 715 715
+                    </a>
+                    <button onclick="toggleCart()" class="text-gray-700 hover:text-brand-600 text-2xl relative transition">
                         <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-badge-desktop" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
+                        <span id="cart-badge-desktop" class="absolute -top-2 -right-2 bg-brand-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
                     </button>
-                    <button id="auth-btn-desktop" onclick="openHODModal('login-modal')" class="border border-brand-200 text-brand-600 font-medium px-4 py-1.5 rounded hover:bg-brand-50 transition text-sm ml-4 shadow-sm">
+                    <button id="auth-btn-desktop" onclick="openHODModal('login-modal')" class="border border-brand-600 text-brand-600 font-medium px-6 py-1.5 rounded hover:bg-brand-50 transition text-sm shadow-sm">
                         Login
                     </button>
-                    <a href="#appointment" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-1.5 rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-sm ml-2">
-                        Book Now
-                    </a>
-                </nav>
+                </div>
 
-                <!-- Mobile Menu Button -->
+                <!-- Mobile Buttons -->
                 <div class="lg:hidden flex items-center gap-4">
                     <button onclick="toggleCart()" class="text-gray-700 hover:text-brand-600 text-xl relative">
                         <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-badge-mobile" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
+                        <span id="cart-badge-mobile" class="absolute -top-2 -right-2 bg-brand-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
                     </button>
-                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-brand-600 focus:outline-none p-2 bg-white rounded-md shadow-sm border border-gray-200">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                    <button id="mobile-menu-btn" class="text-gray-900 text-xl">
+                        <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Secondary Nav Links -->
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full hidden lg:block">
+            <div class="flex justify-between items-center py-2">
+                <nav class="flex space-x-10 items-center justify-center flex-grow pl-10">
+                    <a href="#" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Home <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                    <a href="#services" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Locate Us <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                    <a href="#facilities" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Facilities <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                    <a href="#popular-tests" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Find A Test <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                    <a href="#health-packages" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Health Packages <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                    <a href="#footer" class="nav-link text-gray-800 text-sm font-semibold hover:text-brand-600 transition-colors flex items-center gap-1.5">Reach Us <i class="fas fa-chevron-down text-[10px] text-brand-600"></i></a>
+                </nav>
+                <button onclick="openHODModal('report-modal')" class="border border-brand-600 text-brand-600 font-medium px-5 py-1 rounded-full hover:bg-brand-50 transition text-sm">
+                    Online Report
+                </button>
             </div>
         </div>
     </header>
 
     <!-- Mobile Navigation Dropdown -->
-    <div id="mobile-menu" class="lg:hidden fixed top-24 left-0 w-full bg-white border-b border-gray-200 z-40 shadow-lg">
+    <div id="mobile-menu" class="lg:hidden fixed top-[115px] left-0 w-full bg-white border-b border-gray-200 z-40 shadow-lg">
         <div class="px-4 py-4 space-y-2">
             <a href="#home" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Home</a>
-            <a href="#services" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Services</a>
-            <a href="#popular-tests" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Popular Tests</a>
+            <a href="#services" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Locate Us</a>
+            <a href="#facilities" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Facilities</a>
+            <a href="#popular-tests" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Find A Test</a>
             <a href="#health-packages" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Health Packages</a>
-            <a href="#doctors" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Doctors</a>
-            <a href="#contact" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Contact</a>
+            <a href="#footer" class="block px-4 py-3 text-gray-800 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 rounded-lg font-medium transition-colors">Reach Us</a>
             <button onclick="openHODModal('login-modal')" class="w-full text-left px-4 py-3 text-brand-600 bg-brand-50 font-bold rounded-lg transition-colors">Login / Profile</button>
         </div>
     </div>
 
+    <!-- Floating Quick Actions -->
+    <div class="fixed right-0 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-[90] p-2">
+        <a href="tel:18005715715" class="w-12 h-12 bg-white rounded-l-xl shadow-lg border border-r-0 border-gray-200 flex items-center justify-center text-brand-600 text-xl hover:w-14 transition-all duration-300">
+            <i class="fas fa-phone-alt transform -rotate-90"></i>
+        </a>
+        <a href="https://wa.me/919911014950" target="_blank" class="w-12 h-12 bg-white rounded-l-xl shadow-lg border border-r-0 border-gray-200 flex items-center justify-center text-green-500 text-2xl hover:w-14 transition-all duration-300">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
     <!-- Hero Section -->
-    <section id="home" class="relative pt-36 pb-16 lg:pt-44 lg:pb-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-12">
-                <div class="w-full lg:w-1/2 text-center lg:text-left">
-                    <span class="inline-block py-1.5 px-4 rounded-full bg-white shadow-sm text-brand-600 text-sm font-bold mb-5 border border-brand-100">
-                        Excellence in Healthcare
-                    </span>
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
-                        Advanced Care for a <br class="hidden lg:block"/><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-500">Better Tomorrow</span>
-                    </h1>
-                    <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto lg:mx-0 font-medium">
-                        Experience world-class medical expertise with state-of-the-art technology. Your health journey is in the safest hands at CarePlus.
-                    </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <a href="#appointment" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-[0_8px_20px_rgb(14,165,233,0.3)] hover:-translate-y-0.5 flex items-center justify-center gap-2">
-                            Book an Appointment
-                        </a>
-                        <a href="#services" class="w-full sm:w-auto bg-white/90 hover:bg-white text-gray-900 border border-gray-200 px-8 py-3.5 rounded-full font-bold transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow">
-                            Explore Services
-                        </a>
-                    </div>
+    <section id="home" class="relative pt-48 pb-16 lg:pt-56 lg:pb-24 overflow-hidden bg-gray-800">
+        <div class="absolute inset-0 z-0">
+            <!-- Hero Image Replacement referencing delivery scooter look -->
+            <img src="https://images.unsplash.com/photo-1628348070889-cb656235b4af?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Medical Hero" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/80 to-transparent"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between">
+            <div class="w-full md:w-1/2 text-white">
+                <h1 class="text-4xl md:text-5xl font-light mb-2">Experience Care</h1>
+                <p class="text-lg mb-8 text-gray-300">Find Tests, Health Checkups and Centres Near You.</p>
+                
+                <div class="flex border border-white/20 rounded-md bg-white overflow-hidden max-w-md mb-4 shadow-lg">
+                    <div class="px-4 py-3 bg-gray-100 text-gray-600 text-sm border-r border-gray-200 whitespace-nowrap">Search Cen</div>
+                    <input type="text" class="w-full px-4 text-gray-800 text-sm focus:outline-none" placeholder="Search tests...">
+                    <button class="bg-brand-600 px-6 text-white hover:bg-brand-700 transition"><i class="fas fa-search"></i></button>
                 </div>
-                <div class="w-full lg:w-1/2 relative">
-                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Clinic Team" class="rounded-[2rem] shadow-2xl relative z-10 w-full object-cover h-[400px] lg:h-[500px]">
+                
+                <p class="text-sm mb-3 text-gray-300">Can't find your test? Upload Prescription & Get Callback!</p>
+                <button class="bg-white text-gray-900 px-6 py-2 rounded font-bold shadow-md hover:bg-gray-100 transition flex items-center gap-2">
+                    <i class="fas fa-cloud-upload-alt text-brand-600"></i> Upload Prescription
+                </button>
+            </div>
+
+            <div class="w-full md:w-1/2 mt-12 md:mt-0 text-right md:pl-10 text-white flex flex-col items-center md:items-end">
+                <h2 class="text-3xl md:text-5xl font-light mb-2 text-shadow">Express</h2>
+                <h3 class="text-2xl md:text-4xl font-bold mb-6 text-shadow">Home Sample Collection</h3>
+                <div class="bg-white text-gray-900 text-4xl md:text-6xl font-black py-4 px-10 rounded-xl shadow-2xl mb-4 inline-block">
+                    60 minutes*
                 </div>
+                <p class="text-sm text-gray-300 max-w-xs text-center md:text-right bg-black/40 p-3 rounded backdrop-blur-sm">
+                    Now avail home visits for your blood tests and health checkups in as early as 60 minutes* in Delhi / NCR
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 relative overflow-hidden border-t border-blue-200/50">
-        <div class="absolute inset-0 z-0 pointer-events-none">
-            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm scale-110" style="background-image: url('clinic-bg.jpg');"></div>
-            <div class="absolute inset-0 bg-blue-50/80"></div>
-        </div>
+    <!-- HOD Feature: Explore More Section -->
+    <section class="max-w-[1400px] mx-auto px-4 py-16 bg-white">
+        <h2 class="text-2xl font-bold text-black mb-8 text-center md:text-left">Explore More</h2>
         
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16 max-w-3xl mx-auto">
-                <h2 class="text-brand-700 font-bold tracking-wider uppercase text-sm mb-2 bg-white/70 inline-block px-3 py-1 rounded-full shadow-sm border border-blue-100">Centers of Excellence</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 drop-shadow-sm">Our Premium Services</h3>
-                <p class="text-gray-700 text-lg font-medium">Comprehensive medical care tailored to your specific needs.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white border border-gray-200 rounded-lg p-5 flex items-center cursor-pointer hover:border-brand-600 shadow-sm hover:shadow-md transition group">
+                <div class="w-12 flex justify-center text-brand-600 text-2xl group-hover:scale-110 transition-transform"><i class="fas fa-search-plus"></i></div>
+                <div class="ml-4"><h3 class="font-bold text-gray-900 text-sm">Find a Test</h3><p class="text-xs text-gray-500 mt-1">View Tests and Prices</p></div>
             </div>
-
-            <!-- Services Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Service 1 -->
-                <div class="bg-white/95 rounded-2xl shadow-md hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col h-full overflow-hidden border border-white" onclick="openModal('service', 'ophthalmology')">
-                    <div class="p-8 flex-grow relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm relative z-10">
-                            <i class="fa-solid fa-eye"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors">Ophthalmology</h4>
-                        <p class="text-gray-600 leading-relaxed">Advanced eye care, Lasik, cataract surgeries, and comprehensive vision diagnostics with cutting-edge technology.</p>
-                    </div>
-                    <div class="px-8 pb-8 pt-4 mt-auto border-t border-gray-100 flex items-center justify-between text-brand-600 font-bold group-hover:text-brand-700">
-                        <span>View Details</span>
-                        <i class="fa-solid fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
-                    </div>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="bg-white/95 rounded-2xl shadow-md hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col h-full overflow-hidden border border-white" onclick="openModal('service', 'cardiology')">
-                    <div class="p-8 flex-grow relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-red-50 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="w-16 h-16 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-red-500 group-hover:text-white transition-colors duration-300 shadow-sm relative z-10">
-                            <i class="fa-solid fa-heart-pulse"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors">Cardiology</h4>
-                        <p class="text-gray-600 leading-relaxed">State-of-the-art heart care, ECG, echocardiography, and preventive cardiology by renowned heart specialists.</p>
-                    </div>
-                    <div class="px-8 pb-8 pt-4 mt-auto border-t border-gray-100 flex items-center justify-between text-brand-600 font-bold group-hover:text-brand-700">
-                        <span>View Details</span>
-                        <i class="fa-solid fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
-                    </div>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="bg-white/95 rounded-2xl shadow-md hover:shadow-2xl hover:shadow-teal-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col h-full overflow-hidden border border-white" onclick="openModal('service', 'dentistry')">
-                    <div class="p-8 flex-grow relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-teal-50 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-teal-500 group-hover:text-white transition-colors duration-300 shadow-sm relative z-10">
-                            <i class="fa-solid fa-tooth"></i>
-                        </div>
-                        <h4 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-brand-600 transition-colors">Dental Care</h4>
-                        <p class="text-gray-600 leading-relaxed">Complete oral care, orthodontics, cosmetic dentistry, implants, and painless root canal treatments.</p>
-                    </div>
-                    <div class="px-8 pb-8 pt-4 mt-auto border-t border-gray-100 flex items-center justify-between text-brand-600 font-bold group-hover:text-brand-700">
-                        <span>View Details</span>
-                        <i class="fa-solid fa-arrow-right transform group-hover:translate-x-2 transition-transform"></i>
-                    </div>
-                </div>
+            <div class="bg-white border border-gray-200 rounded-lg p-5 flex items-center cursor-pointer hover:border-brand-600 shadow-sm hover:shadow-md transition group">
+                <div class="w-12 flex justify-center text-brand-600 text-2xl group-hover:scale-110 transition-transform"><i class="fas fa-home"></i></div>
+                <div class="ml-4"><h3 class="font-bold text-gray-900 text-sm">Home Collection</h3><p class="text-xs text-gray-500 mt-1">Book Home Collection</p></div>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-lg p-5 flex items-center cursor-pointer hover:border-brand-600 shadow-sm hover:shadow-md transition group">
+                <div class="w-12 flex justify-center text-brand-600 text-2xl group-hover:scale-110 transition-transform"><i class="far fa-hospital"></i></div>
+                <div class="ml-4"><h3 class="font-bold text-gray-900 text-sm">Locate Centres</h3><p class="text-xs text-gray-500 mt-1">Find Centres near you</p></div>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-lg p-5 flex items-center cursor-pointer hover:border-brand-600 shadow-sm hover:shadow-md transition group">
+                <div class="w-12 flex justify-center text-brand-600 text-2xl group-hover:scale-110 transition-transform"><i class="fas fa-notes-medical"></i></div>
+                <div class="ml-4"><h3 class="font-bold text-gray-900 text-sm">Health Packages</h3><p class="text-xs text-gray-500 mt-1">Whole Body Health Checkup</p></div>
             </div>
         </div>
     </section>
 
     <!-- HOD Feature: Popular Tests Section -->
-    <section id="popular-tests" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
-        <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Popular Tests</h2>
+    <section id="popular-tests" class="max-w-[1400px] mx-auto px-4 py-16 relative">
+        <h2 class="text-2xl font-bold text-gray-900 mb-8">Popular Tests</h2>
         
-        <button onclick="scrollCarousel('popular-tests', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center shadow-md hidden md:flex hover:bg-brand-600 hover:text-white transition"><i class="fas fa-chevron-left"></i></button>
-        <button onclick="scrollCarousel('popular-tests', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center shadow-md hidden md:flex hover:bg-brand-600 hover:text-white transition"><i class="fas fa-chevron-right"></i></button>
+        <button onclick="scrollCarousel('popular-tests', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-white border border-gray-200 text-brand-600 rounded-full flex items-center justify-center shadow-lg hidden md:flex hover:bg-gray-50 transition"><i class="fas fa-chevron-left"></i></button>
+        <button onclick="scrollCarousel('popular-tests', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-white border border-gray-200 text-brand-600 rounded-full flex items-center justify-center shadow-lg hidden md:flex hover:bg-gray-50 transition"><i class="fas fa-chevron-right"></i></button>
 
         <div id="popular-tests-carousel" class="flex overflow-x-auto hide-scroll gap-6 pb-4 snap-x snap-mandatory scroll-smooth">
             <!-- Test Card 1 -->
-            <div class="min-w-[300px] md:min-w-[350px] rounded-2xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
+            <div class="min-w-[300px] md:min-w-[350px] rounded-xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
                 <div>
-                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-2xl">
+                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-xl">
                         <h3 class="font-bold text-lg w-2/3 leading-tight">Thyroid Profile (T3, T4, TSH)</h3>
                         <div class="font-bold text-lg">₹399</div>
                     </div>
-                    <div class="p-6 bg-white -mt-4 rounded-t-2xl relative">
-                        <div class="flex gap-4 mb-4 text-sm text-gray-700">
-                            <div><div class="font-bold text-black">3 Parameters</div><div class="text-xs">Included</div></div>
-                        </div>
+                    <div class="p-6 bg-white -mt-4 rounded-t-xl relative">
+                        <div class="flex gap-4 mb-2 text-sm text-gray-700"><div><div class="font-bold text-black">3 Parameters</div><div class="text-xs">Included</div></div></div>
                     </div>
                 </div>
-                <div class="px-6 pb-6 pt-0 flex gap-2">
-                    <button onclick="addToCart('Thyroid Profile', 399)" class="w-full bg-brand-50 hover:bg-brand-600 hover:text-white text-brand-600 font-bold py-2.5 rounded-xl transition border border-brand-200">Add to Cart</button>
+                <div class="px-6 pb-6 flex gap-3">
+                    <button onclick="openBigCard('Thyroid Profile (T3, T4, TSH)')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                    <button onclick="addToCart('Thyroid Profile (T3, T4, TSH)', 399)" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-lg transition">Add to Cart</button>
                 </div>
             </div>
 
             <!-- Test Card 2 -->
-            <div class="min-w-[300px] md:min-w-[350px] rounded-2xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
+            <div class="min-w-[300px] md:min-w-[350px] rounded-xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
                 <div>
-                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-2xl">
+                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-xl">
                         <h3 class="font-bold text-lg w-2/3 leading-tight">CRP (C-Reactive Protein)</h3>
                         <div class="font-bold text-lg">₹299</div>
                     </div>
-                    <div class="p-6 bg-white -mt-4 rounded-t-2xl relative">
-                        <div class="flex gap-4 mb-4 text-sm text-gray-700">
-                            <div><div class="font-bold text-black">1 Parameter</div><div class="text-xs">Included</div></div>
-                        </div>
+                    <div class="p-6 bg-white -mt-4 rounded-t-xl relative">
+                        <div class="flex gap-4 mb-2 text-sm text-gray-700"><div><div class="font-bold text-black">1 Parameter</div><div class="text-xs">Included</div></div></div>
                     </div>
                 </div>
-                <div class="px-6 pb-6 pt-0 flex gap-2">
-                    <button onclick="addToCart('CRP (C-Reactive Protein)', 299)" class="w-full bg-brand-50 hover:bg-brand-600 hover:text-white text-brand-600 font-bold py-2.5 rounded-xl transition border border-brand-200">Add to Cart</button>
+                <div class="px-6 pb-6 flex gap-3">
+                    <button onclick="openBigCard('CRP (C-Reactive Protein)')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                    <button onclick="addToCart('CRP (C-Reactive Protein)', 299)" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-lg transition">Add to Cart</button>
                 </div>
             </div>
 
             <!-- Test Card 3 -->
-            <div class="min-w-[300px] md:min-w-[350px] rounded-2xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
+            <div class="min-w-[300px] md:min-w-[350px] rounded-xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
                 <div>
-                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-2xl">
+                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-xl">
                         <h3 class="font-bold text-lg w-2/3 leading-tight">X-Ray Chest PA View</h3>
                         <div class="font-bold text-lg">₹350</div>
                     </div>
-                    <div class="p-6 bg-white -mt-4 rounded-t-2xl relative">
-                        <div class="flex gap-4 mb-4 text-sm text-gray-700">
-                            <div><div class="font-bold text-black">1 View</div><div class="text-xs">Included</div></div>
-                        </div>
+                    <div class="p-6 bg-white -mt-4 rounded-t-xl relative">
+                        <div class="flex gap-4 mb-2 text-sm text-gray-700"><div><div class="font-bold text-black">1 View</div><div class="text-xs">Included</div></div></div>
                     </div>
                 </div>
-                <div class="px-6 pb-6 pt-0 flex gap-2">
-                    <button onclick="addToCart('X-Ray Chest PA View', 350)" class="w-full bg-brand-50 hover:bg-brand-600 hover:text-white text-brand-600 font-bold py-2.5 rounded-xl transition border border-brand-200">Add to Cart</button>
+                <div class="px-6 pb-6 flex gap-3">
+                    <button onclick="openBigCard('X-Ray Chest PA View')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                    <button onclick="addToCart('X-Ray Chest PA View', 350)" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-lg transition">Add to Cart</button>
                 </div>
             </div>
             
             <!-- Test Card 4 -->
-            <div class="min-w-[300px] md:min-w-[350px] rounded-2xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
+            <div class="min-w-[300px] md:min-w-[350px] rounded-xl overflow-hidden shadow-card snap-start flex flex-col justify-between border border-gray-200 bg-white hover:shadow-card-hover transition">
                 <div>
-                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-2xl">
+                    <div class="bg-brand-600 text-white p-6 pb-8 flex justify-between items-start rounded-t-xl">
                         <h3 class="font-bold text-lg w-2/3 leading-tight">Lipid Profile</h3>
                         <div class="font-bold text-lg">₹400</div>
                     </div>
-                    <div class="p-6 bg-white -mt-4 rounded-t-2xl relative">
-                        <div class="flex gap-4 mb-4 text-sm text-gray-700">
-                            <div><div class="font-bold text-black">8 Parameters</div><div class="text-xs">Included</div></div>
-                        </div>
+                    <div class="p-6 bg-white -mt-4 rounded-t-xl relative">
+                        <div class="flex gap-4 mb-2 text-sm text-gray-700"><div><div class="font-bold text-black">8 Parameters</div><div class="text-xs">Included</div></div></div>
                     </div>
                 </div>
-                <div class="px-6 pb-6 pt-0 flex gap-2">
-                    <button onclick="addToCart('Lipid Profile', 400)" class="w-full bg-brand-50 hover:bg-brand-600 hover:text-white text-brand-600 font-bold py-2.5 rounded-xl transition border border-brand-200">Add to Cart</button>
+                <div class="px-6 pb-6 flex gap-3">
+                    <button onclick="openBigCard('Lipid Profile')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                    <button onclick="addToCart('Lipid Profile', 400)" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-lg transition">Add to Cart</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HOD Feature: Health Packages Section -->
-    <section id="health-packages" class="bg-blue-50/50 py-20 border-y border-blue-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Health Packages</h2>
+    <!-- Health Packages Section -->
+    <section id="health-packages" class="bg-gray-50 py-16 border-y border-gray-200">
+        <div class="max-w-[1400px] mx-auto px-4 relative">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Health Packages</h2>
             
-            <button onclick="scrollCarousel('health-packages', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-white text-brand-600 rounded-full flex items-center justify-center shadow-md hidden md:flex hover:bg-brand-600 hover:text-white transition"><i class="fas fa-chevron-left"></i></button>
-            <button onclick="scrollCarousel('health-packages', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-white text-brand-600 rounded-full flex items-center justify-center shadow-md hidden md:flex hover:bg-brand-600 hover:text-white transition"><i class="fas fa-chevron-right"></i></button>
+            <button onclick="scrollCarousel('health-packages', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-white border border-gray-200 text-brand-600 rounded-full flex items-center justify-center shadow-lg hidden md:flex hover:bg-gray-50 transition"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="scrollCarousel('health-packages', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 z-10 w-10 h-10 bg-white border border-gray-200 text-brand-600 rounded-full flex items-center justify-center shadow-lg hidden md:flex hover:bg-gray-50 transition"><i class="fas fa-chevron-right"></i></button>
 
             <div id="health-packages-carousel" class="flex overflow-x-auto hide-scroll gap-6 pb-4 snap-x snap-mandatory scroll-smooth">
                 <!-- Package 1 -->
-                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl p-6 shadow-sm hover:shadow-card-hover snap-start flex-1 border border-gray-200 flex flex-col justify-between transition">
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-xl p-6 shadow-card snap-start flex-1 border border-gray-200 flex flex-col justify-between transition hover:shadow-card-hover">
                     <div>
-                        <h3 class="font-bold text-xl text-gray-900 leading-tight mb-2">Total Care Checkup</h3>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight mb-2">Total Care Checkup</h3>
                         <p class="text-sm text-gray-500 mb-4 border-b border-gray-100 pb-4">87 Parameters Included</p>
-                        <div class="font-extrabold text-2xl text-brand-600 mb-6">₹1999</div>
+                        <div class="font-extrabold text-2xl text-gray-900 mb-6">₹1999</div>
                     </div>
-                    <button onclick="addToCart('Total Care Checkup', 1999)" class="w-full bg-brand-600 text-white font-bold py-3 rounded-xl transition hover:bg-brand-700 shadow-sm">Add to Cart</button>
+                    <div class="flex gap-3">
+                        <button onclick="openBigCard('Total Care Checkup')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                        <button onclick="addToCart('Total Care Checkup', 1999)" class="w-1/2 bg-brand-600 text-white font-bold py-2.5 rounded-lg transition hover:bg-brand-700">Add to Cart</button>
+                    </div>
                 </div>
 
                 <!-- Package 2 -->
-                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl p-6 shadow-sm hover:shadow-card-hover snap-start flex-1 border border-gray-200 flex flex-col justify-between transition">
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-xl p-6 shadow-card snap-start flex-1 border border-gray-200 flex flex-col justify-between transition hover:shadow-card-hover">
                     <div>
-                        <h3 class="font-bold text-xl text-gray-900 leading-tight mb-2">Senior Citizen (Male)</h3>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight mb-2">Senior Citizen Checkup - Male</h3>
                         <p class="text-sm text-gray-500 mb-4 border-b border-gray-100 pb-4">99 Parameters Included</p>
-                        <div class="font-extrabold text-2xl text-brand-600 mb-6">₹4999</div>
+                        <div class="font-extrabold text-2xl text-gray-900 mb-6">₹4999</div>
                     </div>
-                    <button onclick="addToCart('Senior Citizen Checkup - Male', 4999)" class="w-full bg-brand-600 text-white font-bold py-3 rounded-xl transition hover:bg-brand-700 shadow-sm">Add to Cart</button>
+                    <div class="flex gap-3">
+                        <button onclick="openBigCard('Senior Citizen Checkup - Male')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                        <button onclick="addToCart('Senior Citizen Checkup - Male', 4999)" class="w-1/2 bg-brand-600 text-white font-bold py-2.5 rounded-lg transition hover:bg-brand-700">Add to Cart</button>
+                    </div>
                 </div>
 
                 <!-- Package 3 -->
-                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl p-6 shadow-sm hover:shadow-card-hover snap-start flex-1 border border-gray-200 flex flex-col justify-between transition">
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-xl p-6 shadow-card snap-start flex-1 border border-gray-200 flex flex-col justify-between transition hover:shadow-card-hover">
                     <div>
-                        <h3 class="font-bold text-xl text-gray-900 leading-tight mb-2">Senior Citizen (Female)</h3>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight mb-2">Senior Citizen Checkup - Female</h3>
                         <p class="text-sm text-gray-500 mb-4 border-b border-gray-100 pb-4">97 Parameters Included</p>
-                        <div class="font-extrabold text-2xl text-brand-600 mb-6">₹4999</div>
+                        <div class="font-extrabold text-2xl text-gray-900 mb-6">₹4999</div>
                     </div>
-                    <button onclick="addToCart('Senior Citizen Checkup - Female', 4999)" class="w-full bg-brand-600 text-white font-bold py-3 rounded-xl transition hover:bg-brand-700 shadow-sm">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Appointment Section (Original CarePlus) -->
-    <section id="appointment" class="py-24 relative z-10 overflow-hidden">
-        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-[40rem] h-[40rem] bg-brand-500/10 rounded-full mix-blend-multiply opacity-50 z-0 pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-14">
-                <h2 class="text-brand-700 font-bold tracking-wider uppercase text-sm mb-2 bg-white/70 inline-block px-3 py-1 rounded-full border border-gray-200">Fast & Easy</h2>
-                <h3 class="text-4xl md:text-5xl font-extrabold text-gray-900 drop-shadow-sm">Book Your Appointment</h3>
-            </div>
-            
-            <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] border border-gray-100 flex flex-col lg:flex-row max-w-6xl mx-auto ring-1 ring-gray-900/5">
-                
-                <div class="w-full lg:w-5/12 bg-gradient-to-br from-brand-800 to-brand-900 p-10 lg:p-14 text-white flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full transform translate-x-1/3 -translate-y-1/3"></div>
-                    <div class="absolute bottom-0 left-0 w-72 h-72 bg-brand-500/30 rounded-full transform -translate-x-1/4 translate-y-1/4"></div>
-                    
-                    <div class="relative z-10">
-                        <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8 border border-white/20">
-                            <i class="fa-regular fa-calendar-check text-3xl text-white"></i>
-                        </div>
-                        <h3 class="text-4xl font-bold mb-4">We Are Here For You</h3>
-                        <p class="text-brand-100 mb-12 text-lg leading-relaxed font-light">Fill out the form with your details, and our dedicated team will contact you shortly to confirm your visit schedule.</p>
-                        
-                        <div class="space-y-8">
-                            <div class="flex items-center gap-5">
-                                <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-inner">
-                                    <i class="fa-solid fa-phone text-xl text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-brand-200 uppercase tracking-wider font-semibold">Emergency Line</p>
-                                    <p class="text-2xl font-bold tracking-tight mt-0.5">+1 (800) 123 4567</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-5">
-                                <div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-inner">
-                                    <i class="fa-solid fa-clock text-xl text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-brand-200 uppercase tracking-wider font-semibold">Working Hours</p>
-                                    <p class="text-xl font-bold tracking-tight mt-0.5">24/7 Availability</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full lg:w-7/12 p-10 lg:p-14 flex flex-col justify-center">
-                    <div id="form-success-msg" class="hidden mb-8 bg-green-50 border border-green-200 text-green-800 rounded-2xl p-5 flex items-start gap-4 transition-all">
-                        <i class="fa-solid fa-circle-check text-green-500 mt-1 text-xl"></i>
-                        <div>
-                            <h4 class="font-bold text-lg">Appointment Requested!</h4>
-                            <p class="text-base mt-1 text-green-700">Our receptionist will call you within 30 minutes to confirm.</p>
-                        </div>
-                    </div>
-
-                    <form id="booking-form" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="relative">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Patient's Full Name</label>
-                                <div class="relative">
-                                    <i class="fa-regular fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                    <input type="text" required placeholder="John Doe" class="w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 placeholder-gray-400 font-medium shadow-sm">
-                                </div>
-                            </div>
-                            <div class="relative">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-                                <div class="relative">
-                                    <i class="fa-solid fa-mobile-screen absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                    <input type="tel" required placeholder="(123) 456-7890" class="w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 placeholder-gray-400 font-medium shadow-sm">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="relative">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Preferred Date</label>
-                                <input type="date" required id="form-date" class="w-full px-5 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium shadow-sm">
-                            </div>
-                            <div class="relative">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Select Department</label>
-                                <div class="relative">
-                                    <select required class="w-full pl-5 pr-12 py-4 rounded-2xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium appearance-none shadow-sm">
-                                        <option value="" disabled selected>Choose service...</option>
-                                        <option>Ophthalmology</option>
-                                        <option>Cardiology</option>
-                                        <option>Dental Care</option>
-                                        <option>Orthopedics</option>
-                                        <option>Neurology</option>
-                                        <option>Pediatrics</option>
-                                    </select>
-                                    <i class="fa-solid fa-chevron-down absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pt-6">
-                            <button type="submit" class="w-full bg-gradient-to-r from-brand-600 to-blue-500 hover:from-brand-700 hover:to-blue-600 text-white font-extrabold text-lg py-4 rounded-2xl shadow-[0_8px_25px_rgb(14,165,233,0.4)] transition-all hover:shadow-[0_8px_30px_rgb(14,165,233,0.6)] transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                                Confirm Booking <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Our Doctors Section -->
-    <section id="doctors" class="py-24 relative overflow-hidden border-y border-slate-300/50">
-        <div class="absolute inset-0 z-0 pointer-events-none">
-            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm scale-110" style="background-image: url('clinic-bg2.png');"></div>
-            <div class="absolute inset-0 bg-slate-50/80"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16 max-w-3xl mx-auto">
-                <h2 class="text-brand-700 font-bold tracking-wider uppercase text-sm mb-2 bg-white/70 inline-block px-3 py-1 rounded-full shadow-sm border border-slate-200">Meet Our Experts</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 drop-shadow-sm">Our Dedicated Doctors</h3>
-                <p class="text-gray-700 text-lg font-medium">Highly qualified and experienced professionals committed to your wellbeing.</p>
-            </div>
-
-            <!-- Doctor Cards Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Doctor 1 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col border border-gray-100" onclick="openModal('doctor', 'dr_sarah')">
-                    <div class="h-72 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dr. Sarah" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-6 text-center flex-grow flex flex-col justify-center relative">
-                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                            <i class="fa-solid fa-stethoscope text-brand-500 text-xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mt-4 mb-1 group-hover:text-brand-600 transition-colors">Dr. Sarah Smith</h4>
-                        <p class="text-brand-600 font-bold text-sm mb-2">Senior Ophthalmologist</p>
-                    </div>
-                </div>
-
-                <!-- Doctor 2 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col border border-gray-100" onclick="openModal('doctor', 'dr_john')">
-                    <div class="h-72 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dr. John" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-6 text-center flex-grow flex flex-col justify-center relative">
-                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                            <i class="fa-solid fa-heart-pulse text-red-500 text-xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mt-4 mb-1 group-hover:text-brand-600 transition-colors">Dr. John Doe</h4>
-                        <p class="text-brand-600 font-bold text-sm mb-2">Head of Cardiology</p>
-                    </div>
-                </div>
-                
-                <!-- Doctor 3 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col border border-gray-100" onclick="openModal('doctor', 'dr_emily')">
-                    <div class="h-72 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1594824436998-058d01e6a188?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dr. Emily" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-6 text-center flex-grow flex flex-col justify-center relative">
-                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                            <i class="fa-solid fa-tooth text-teal-500 text-xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mt-4 mb-1 group-hover:text-brand-600 transition-colors">Dr. Emily Chen</h4>
-                        <p class="text-brand-600 font-bold text-sm mb-2">Dental Surgeon</p>
-                    </div>
-                </div>
-
-                <!-- Doctor 4 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300 hover:-translate-y-2 cursor-pointer group flex flex-col border border-gray-100" onclick="openModal('doctor', 'dr_michael')">
-                    <div class="h-72 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dr. Michael" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    </div>
-                    <div class="p-6 text-center flex-grow flex flex-col justify-center relative">
-                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                            <i class="fa-solid fa-bone text-orange-500 text-xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mt-4 mb-1 group-hover:text-brand-600 transition-colors">Dr. Michael Brown</h4>
-                        <p class="text-brand-600 font-bold text-sm mb-2">Orthopedic Specialist</p>
+                    <div class="flex gap-3">
+                        <button onclick="openBigCard('Senior Citizen Checkup - Female')" class="w-1/2 border border-brand-600 text-brand-600 font-bold py-2.5 rounded-lg transition hover:bg-brand-50">Know More</button>
+                        <button onclick="addToCart('Senior Citizen Checkup - Female', 4999)" class="w-1/2 bg-brand-600 text-white font-bold py-2.5 rounded-lg transition hover:bg-brand-700">Add to Cart</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HOD Feature: Why Choose Us -->
-    <section class="bg-gray-50 py-16 border-b border-gray-200">
-        <div class="max-w-[1400px] mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-gray-900 mb-10">Why Choose <span class="text-brand-600">Us</span></h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 flex flex-col items-center">
-                    <div class="w-16 h-16 bg-brand-600 text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg"><i class="fas fa-bolt"></i></div>
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">Fast & Accurate Results</h3>
-                    <p class="text-sm text-gray-500">Quick sample collection and precise reports.</p>
-                </div>
-                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 flex flex-col items-center">
-                    <div class="w-16 h-16 bg-brand-600 text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg"><i class="fas fa-check-circle"></i></div>
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">Trusted & Ethical</h3>
-                    <p class="text-sm text-gray-500">Committed to transparency, integrity, and patient care.</p>
-                </div>
-                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 flex flex-col items-center">
-                    <div class="w-16 h-16 bg-brand-600 text-white rounded-full flex items-center justify-center text-2xl mb-6 shadow-lg"><i class="fas fa-rupee-sign"></i></div>
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">Affordable</h3>
-                    <p class="text-sm text-gray-500">Premium diagnostic services at highly competitive prices.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Updated Footer (HOD Layout style with CarePlus context) -->
+    <!-- Updated Footer -->
     <footer id="footer" class="bg-white pt-16 pb-8 border-t border-gray-200 relative z-10">
         <div class="max-w-[1400px] mx-auto px-4 flex flex-col lg:flex-row gap-12">
             <!-- Quick Links -->
@@ -699,18 +413,19 @@
                         <div class="flex items-start gap-3">
                             <i class="fas fa-map-marker-alt text-brand-600 mt-1 text-lg"></i>
                             <p class="leading-relaxed">
-                                <strong>CarePlus Diagnostic Center</strong><br>
-                                123 Healthcare Avenue, Medical District,<br>
-                                New York, NY 10001
+                                <strong>Dr. OPG Diagnostic Center</strong><br>
+                                B-7, Loni Rd, near Bank of Baroda,<br>
+                                near Durgapuri Chowk, West Jyoti Nagar,<br>
+                                Shahdara, Delhi, 110093
                             </p>
                         </div>
                         <div class="flex items-center gap-3 mt-2">
                             <i class="fas fa-phone-alt text-brand-600 text-lg"></i>
-                            <p class="font-bold">+1 (800) 123 4567</p>
+                            <p class="font-bold">+91 9911014950</p>
                         </div>
                         <div class="flex items-center gap-3">
                             <i class="fas fa-envelope text-brand-600 text-lg"></i>
-                            <p>info@careplusclinic.com</p>
+                            <p>info@dropgdiagnostic.com</p>
                         </div>
                     </div>
                 </div>
@@ -738,12 +453,12 @@
         <div class="max-w-[1400px] mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6 pb-6">
             <!-- Logo -->
             <div class="flex flex-col items-center justify-center cursor-pointer md:items-start" onclick="window.scrollTo(0,0)">
-                <span class="font-bold text-2xl text-gray-900 tracking-tight">Care<span class="text-brand-600">Plus</span></span>
-                <div class="text-[9px] tracking-[0.15em] font-medium text-gray-500 uppercase mt-0.5" id="copyright-text">Diagnostic Center</div>
+                <div class="text-brand-600 text-2xl font-bold font-serif tracking-widest leading-none">H<span class="mx-1 text-gray-400">•</span>O<span class="mx-1 text-gray-400">•</span>D</div>
+                <div class="text-[7px] tracking-[0.2em] font-semibold text-gray-500 uppercase mt-1" id="copyright-text">House Of Diagnostics</div>
             </div>
             
             <div class="text-sm text-gray-500 font-medium text-center">
-                CarePlus Diagnostic Center - Copyrights 2026, All Rights Reserved
+                Dr. OPG Diagnostic Center - Copyrights 2026, All Rights Reserved
             </div>
             
             <!-- Socials -->
@@ -761,31 +476,63 @@
         </div>
     </footer>
 
-    <!-- CarePlus Original Unified Dynamic Modal -->
-    <div id="dynamic-modal" class="custom-modal fixed inset-0 z-[9000] flex items-center justify-center bg-gray-900/70 opacity-0 invisible" onclick="closeModalOnBgClick(event)">
-        <div class="modal-content bg-white w-11/12 max-w-3xl rounded-2xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
-            <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-black/20 hover:bg-red-500 hover:text-white text-white rounded-full flex items-center justify-center transition-colors z-20 focus:outline-none border border-white/20"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div id="modal-header" class="h-40 w-full relative bg-cover bg-center bg-brand-600">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div id="modal-visual-container" class="absolute -bottom-10 left-8 w-24 h-24 bg-white rounded-2xl shadow-xl flex items-center justify-center border-4 border-white overflow-hidden"></div>
+    <!-- BIG CARD MODAL -->
+    <div id="big-card-modal" class="custom-modal fixed inset-0 z-[9600] hidden flex items-center justify-center bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 p-4">
+        <div class="modal-content bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row relative">
+            
+            <button onclick="closeHODModal('big-card-modal')" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-600 w-8 h-8 rounded-full flex items-center justify-center transition z-10"><i class="fas fa-times"></i></button>
+
+            <!-- Visual Left Side -->
+            <div class="w-full md:w-2/5 bg-brand-50 flex flex-col items-center justify-center p-10 border-r border-gray-100">
+                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-md mb-6 border-4 border-brand-100">
+                    <i id="big-card-icon" class="fas fa-microscope text-6xl text-brand-600"></i>
+                </div>
+                <span id="big-card-tag" class="bg-white text-brand-600 border border-brand-200 font-bold px-4 py-1 rounded-full text-xs uppercase tracking-widest shadow-sm">Premium Test</span>
             </div>
-            <div class="p-8 pt-14 overflow-y-auto flex-grow">
-                <h3 id="modal-title" class="text-3xl font-extrabold text-gray-900 mb-1">Title</h3>
-                <p id="modal-subtitle" class="text-brand-600 font-bold mb-6 text-lg">Subtitle</p>
-                <div id="modal-body" class="text-gray-700 space-y-4 leading-relaxed text-lg font-medium"></div>
-                <div class="mt-10 pt-6 border-t border-gray-200 flex justify-end gap-4">
-                    <button onclick="closeModal()" class="px-6 py-3 rounded-xl font-bold text-gray-600 hover:bg-gray-100 transition-colors">Close</button>
-                    <a href="#appointment" onclick="closeModal()" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3 rounded-xl font-extrabold transition-all shadow-md hover:shadow-lg flex items-center gap-2">Book Appointment <i class="fa-solid fa-calendar-check"></i></a>
+
+            <!-- Content Right Side -->
+            <div class="w-full md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                <h2 id="big-card-title" class="text-3xl font-extrabold text-gray-900 mb-4 leading-tight">Title</h2>
+                <div class="w-16 h-1 bg-brand-600 rounded mb-6"></div>
+                
+                <p id="big-card-desc" class="text-gray-600 text-lg leading-relaxed mb-8">Description goes here.</p>
+                
+                <div class="bg-gray-50 rounded-xl p-4 flex justify-between items-center border border-gray-100 mb-8">
+                    <div class="flex items-center gap-3">
+                        <i class="far fa-clock text-brand-600 text-xl"></i>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase">Report Turnaround</p>
+                            <p class="text-sm font-bold text-gray-900">Same Day*</p>
+                        </div>
+                    </div>
+                    <div class="w-px h-10 bg-gray-300"></div>
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-vial text-brand-600 text-xl"></i>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase">Sample Type</p>
+                            <p class="text-sm font-bold text-gray-900">Blood / Serum</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end mt-auto pt-4 border-t border-gray-100">
+                    <div>
+                        <p class="text-sm text-gray-500 font-bold mb-1">Total Price</p>
+                        <span id="big-card-price" class="text-3xl font-black text-brand-600">₹0</span>
+                    </div>
+                    <button id="big-card-add-btn" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3.5 rounded-xl font-bold transition shadow-md flex items-center gap-2">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- HOD Feature: Login Modal -->
-    <div id="login-modal" class="custom-modal fixed inset-0 bg-black bg-opacity-50 z-[9500] hidden flex items-center justify-center opacity-0 transition-opacity duration-300 p-4">
+    <!-- Login Modal -->
+    <div id="login-modal" class="custom-modal fixed inset-0 bg-black bg-opacity-70 z-[9500] hidden flex items-center justify-center opacity-0 transition-opacity duration-300 p-4">
         <div class="modal-content bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
             <div class="bg-brand-600 text-white py-4 px-6 flex justify-between items-center">
-                <h2 class="text-xl font-bold">Login to CarePlus</h2>
+                <h2 class="text-xl font-bold">Login to Dr. OPG</h2>
                 <button onclick="closeHODModal('login-modal')" class="text-white hover:text-gray-200"><i class="fas fa-times text-lg"></i></button>
             </div>
             <div class="p-6">
@@ -798,13 +545,13 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2">Enter OTP (Use 1234)</label>
                         <input id="otp" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500" type="text" placeholder="Enter 4-digit OTP" pattern="[0-9]{4}">
                     </div>
-                    <button id="auth-submit-btn" type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl w-full mt-2 transition">Get OTP</button>
+                    <button id="auth-submit-btn" type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl w-full mt-2 transition shadow-sm">Get OTP</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- HOD Feature: Cart Sidebar Container -->
+    <!-- Cart Sidebar -->
     <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[9400] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[9500] shadow-2xl flex flex-col">
         <div class="bg-brand-600 text-white p-5 flex justify-between items-center">
@@ -817,66 +564,31 @@
                 <span class="font-bold text-gray-700 text-lg">Total Amount:</span>
                 <span id="cart-total" class="font-bold text-2xl text-brand-600">₹0</span>
             </div>
-            <button onclick="checkout()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl transition">Proceed to Checkout</button>
+            <button onclick="checkout()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl transition shadow-sm">Proceed to Checkout</button>
         </div>
     </div>
 
     <!-- Toast Container -->
-    <div id="toast-container" class="fixed top-28 right-4 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
-
-    <!-- Hidden Admin Login Modal (Original CarePlus feature) -->
-    <div id="admin-modal" class="custom-modal fixed inset-0 z-[10000] flex items-center justify-center bg-gray-900/80 opacity-0 invisible" onclick="closeAdminModalOnBgClick(event)">
-        <div class="modal-content bg-white w-11/12 max-w-md rounded-2xl shadow-2xl overflow-hidden relative" id="admin-modal-content">
-            <button onclick="closeAdminModal()" class="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full flex items-center justify-center transition-colors z-20 focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
-            <div class="bg-gray-900 p-8 text-center border-b-4 border-brand-600">
-                <div class="w-16 h-16 bg-brand-600/20 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-500/30"><i class="fa-solid fa-shield-halved text-2xl"></i></div>
-                <h3 class="text-2xl font-bold text-white tracking-wide">Admin Access</h3>
-                <p class="text-gray-400 text-sm mt-1">Authorized personnel only</p>
-            </div>
-            <div class="p-8">
-                <form id="admin-login-form" class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Admin Email</label>
-                        <div class="relative">
-                            <i class="fa-solid fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="email" required placeholder="admin@careplusclinic.com" class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Password</label>
-                        <div class="relative">
-                            <i class="fa-solid fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="password" required placeholder="••••••••" class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-gray-900 font-medium">
-                        </div>
-                    </div>
-                    <div class="pt-4">
-                        <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 transform hover:-translate-y-0.5">Login to Dashboard <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Draggable Floating WhatsApp Button -->
-    <div id="wa-button" class="fixed z-[9990] cursor-grab active:cursor-grabbing flex items-center justify-center group" style="bottom: 24px; left: 24px;" title="Drag to move, click to chat!">
-        <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-40 group-hover:opacity-60 transition-opacity"></div>
-        <div class="relative w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full shadow-[0_8px_24px_rgba(34,197,94,0.5)] flex items-center justify-center text-white text-4xl transition-colors border-2 border-white">
-            <i class="fa-brands fa-whatsapp"></i>
-        </div>
-        <div class="absolute left-20 bg-white px-4 py-2 rounded-xl shadow-xl text-sm font-bold text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap hidden md:block border border-gray-200">
-            Chat with us! (Drag to move)
-            <div class="absolute top-1/2 -left-1.5 w-3 h-3 bg-white transform -translate-y-1/2 rotate-45 border-l border-b border-gray-200"></div>
-        </div>
-    </div>
+    <div id="toast-container" class="fixed top-32 right-4 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // HOD Feature: State Management
+        // State Management
         let cart = [];
         let authState = { step: 'mobile', isLoggedIn: false };
 
+        const detailsData = {
+            "Thyroid Profile (T3, T4, TSH)": { desc: "Measures the levels of thyroid hormones to check for hyperthyroidism or hypothyroidism. Requires an empty stomach.", price: 399, tag: "Blood Test", icon: "fa-vial" },
+            "CRP (C-Reactive Protein)": { desc: "Measures the level of c-reactive protein in your blood, which is a marker for inflammation or infection.", price: 299, tag: "Blood Test", icon: "fa-vial" },
+            "X-Ray Chest PA View": { desc: "A standard digital X-ray of the chest used to diagnose conditions affecting the heart, lungs, and bones.", price: 350, tag: "Radiology", icon: "fa-x-ray" },
+            "Lipid Profile": { desc: "Measures total cholesterol, triglycerides, HDL, and LDL. Requires 10-12 hours of fasting.", price: 400, tag: "Blood Test", icon: "fa-vial" },
+            "Total Care Checkup": { desc: "A comprehensive full-body checkup covering 87 parameters including Lipid, Thyroid, LFT, KFT, CBC, and blood sugar.", price: 1999, tag: "Health Package", icon: "fa-heartbeat" },
+            "Senior Citizen Checkup - Male": { desc: "Tailored specifically for senior men. Includes prostate-specific antigen (PSA), cardiac risk markers, arthritis profiling, and routine vitals.", price: 4999, tag: "Health Package", icon: "fa-heartbeat" },
+            "Senior Citizen Checkup - Female": { desc: "Tailored for senior women. Includes osteoporosis markers, thyroid profile, arthritis profiling, and essential vitamin checks.", price: 4999, tag: "Health Package", icon: "fa-heartbeat" }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- CarePlus Original Mobile Menu Logic ---
+            // Mobile Menu
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileIcon = mobileBtn.querySelector('i');
@@ -901,182 +613,9 @@
                 });
             }
 
-            // --- CarePlus Original Booking Form Logic ---
-            const formDate = document.getElementById('form-date');
-            if(formDate) formDate.setAttribute('min', new Date().toISOString().split('T')[0]);
-
-            const form = document.getElementById('booking-form');
-            if(form) {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const msg = document.getElementById('form-success-msg');
-                    msg.classList.remove('hidden');
-                    form.reset();
-                    setTimeout(() => msg.classList.add('hidden'), 5000);
-                });
-            }
-
-            // --- CarePlus Original Draggable WhatsApp Logic ---
-            const waBtn = document.getElementById('wa-button');
-            let isDragging = false;
-            let startX, startY, initialX, initialY, startTime;
-
-            const startDrag = (e) => {
-                const evt = e.type.includes('mouse') ? e : e.touches[0];
-                startX = evt.clientX;
-                startY = evt.clientY;
-                const rect = waBtn.getBoundingClientRect();
-                initialX = rect.left;
-                initialY = rect.top;
-                isDragging = false;
-                startTime = Date.now();
-
-                if(e.type.includes('mouse')) {
-                    document.addEventListener('mousemove', drag);
-                    document.addEventListener('mouseup', endDrag);
-                } else {
-                    document.addEventListener('touchmove', drag, { passive: false });
-                    document.addEventListener('touchend', endDrag);
-                }
-            };
-
-            const drag = (e) => {
-                const evt = e.type.includes('mouse') ? e : e.touches[0];
-                const dx = evt.clientX - startX;
-                const dy = evt.clientY - startY;
-
-                if (Math.abs(dx) > 5 || Math.abs(dy) > 5) isDragging = true;
-
-                if (isDragging) {
-                    if(e.cancelable) e.preventDefault();
-                    let newLeft = Math.max(0, Math.min(initialX + dx, window.innerWidth - waBtn.offsetWidth));
-                    let newTop = Math.max(0, Math.min(initialY + dy, window.innerHeight - waBtn.offsetHeight));
-                    waBtn.style.left = `${newLeft}px`;
-                    waBtn.style.top = `${newTop}px`;
-                    waBtn.style.bottom = 'auto';
-                    waBtn.style.right = 'auto';
-                }
-            };
-
-            const endDrag = (e) => {
-                document.removeEventListener('mousemove', drag);
-                document.removeEventListener('mouseup', endDrag);
-                document.removeEventListener('touchmove', drag);
-                document.removeEventListener('touchend', endDrag);
-                if (!isDragging && (Date.now() - startTime) < 400) {
-                    window.open('https://wa.me/1234567890?text=Hello%20CarePlus%20Clinic,%20I%20have%20an%20inquiry.', '_blank');
-                }
-            };
-
-            if(waBtn) {
-                waBtn.addEventListener('mousedown', startDrag);
-                waBtn.addEventListener('touchstart', startDrag, { passive: false });
-            }
-
-            // --- CarePlus Original Admin Login Logic ---
-            const copyrightText = document.getElementById('copyright-text');
-            const adminModal = document.getElementById('admin-modal');
-            
-            window.openAdminModal = function() { adminModal.classList.add('active'); };
-            window.closeAdminModal = function() { adminModal.classList.remove('active'); };
-            window.closeAdminModalOnBgClick = function(event) { if (event.target === adminModal) closeAdminModal(); };
-
-            if (copyrightText) {
-                copyrightText.addEventListener('dblclick', (e) => {
-                    e.preventDefault();
-                    openAdminModal();
-                });
-            }
-            
-            const adminForm = document.getElementById('admin-login-form');
-            if(adminForm) {
-                adminForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const emailInput = adminForm.querySelector('input[type="email"]');
-                    const passInput = adminForm.querySelector('input[type="password"]');
-                    const btn = adminForm.querySelector('button[type="submit"]');
-                    
-                    if (emailInput.value === 'admin123@gmail.com' && passInput.value === 'admin123') {
-                        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
-                        setTimeout(() => { window.location.href = 'admin.html'; }, 500);
-                    } else {
-                        const existingError = document.getElementById('admin-login-error');
-                        if (existingError) existingError.remove();
-                        const errorMsg = document.createElement('div');
-                        errorMsg.id = 'admin-login-error';
-                        errorMsg.className = 'bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 text-sm font-bold mt-4 text-center flex items-center justify-center gap-2';
-                        errorMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Invalid credentials. Please try again.';
-                        adminForm.appendChild(errorMsg);
-                        setTimeout(() => errorMsg.remove(), 3500);
-                        adminForm.reset();
-                    }
-                });
-            }
-
-            // --- CarePlus Original Data & Info Modal Logic ---
-            const dataStore = {
-                service: {
-                    'ophthalmology': { title: 'Ophthalmology', subtitle: 'Advanced Eye Care Department', bg: 'bg-blue-600', color: 'text-blue-600', icon: 'fa-eye', content: `<p>Our Ophthalmology department provides comprehensive medical and surgical eye care. We use the latest technology for precise diagnostics and effective treatments.</p><ul class="list-disc pl-5 mt-4 space-y-2"><li>Cataract Surgery with premium lenses</li><li>LASIK & Refractive Surgeries</li><li>Glaucoma screening and management</li><li>Pediatric ophthalmology</li></ul>` },
-                    'cardiology': { title: 'Cardiology', subtitle: 'Heart & Vascular Care', bg: 'bg-red-600', color: 'text-red-600', icon: 'fa-heart-pulse', content: `<p>Dedicated to providing superior cardiac care, from prevention to complex interventions. Our heart specialists are here for you 24/7.</p><ul class="list-disc pl-5 mt-4 space-y-2"><li>Non-Invasive Testing (ECG, Echo, TMT)</li><li>Interventional Cardiology (Angiography, Stenting)</li><li>Preventive heart health checkups</li></ul>` },
-                    'dentistry': { title: 'Dental Care', subtitle: 'Complete Oral Health', bg: 'bg-teal-600', color: 'text-teal-600', icon: 'fa-tooth', content: `<p>Experience pain-free dentistry in a relaxing environment. We offer everything from routine cleanings to complete smile makeovers.</p><ul class="list-disc pl-5 mt-4 space-y-2"><li>Cosmetic Dentistry & Teeth Whitening</li><li>Orthodontics (Braces & Clear Aligners)</li><li>Single-visit Root Canals</li><li>Dental Implants</li></ul>` },
-                    'orthopedics': { title: 'Orthopedics', subtitle: 'Bone & Joint Specialists', bg: 'bg-orange-600', color: 'text-orange-600', icon: 'fa-bone', content: `<p>Comprehensive care for the musculoskeletal system to restore mobility, alleviate pain, and improve your quality of life.</p><ul class="list-disc pl-5 mt-4 space-y-2"><li>Total Knee & Hip Replacements</li><li>Sports Medicine & Arthroscopy</li><li>Trauma & Fracture Care</li><li>Physiotherapy & Rehab</li></ul>` },
-                    'neurology': { title: 'Neurology', subtitle: 'Brain & Nervous System', bg: 'bg-purple-600', color: 'text-purple-600', icon: 'fa-brain', content: `<p>Expert diagnosis and management of complex neurological disorders by leading specialists in the field.</p><ul class="list-disc pl-5 mt-4 space-y-2"><li>Stroke Management & Prevention</li><li>Epilepsy & Seizure Care</li><li>Headache & Migraine Clinics</li><li>Movement Disorders (Parkinson's)</li></ul>` },
-                    'pediatrics': { title: 'Pediatrics', subtitle: 'Child Health & Wellness', bg: 'bg-pink-600', color: 'text-pink-600', icon: 'fa-baby', content: `<p>Compassionate and specialized medical care for infants, children, and adolescents, ensuring healthy growth and development.</p><ul class="list-disc pl-5 mt-4 space-y-2"><li>Newborn Care & Vaccinations</li><li>Nutritional Counseling</li><li>Management of Childhood Illnesses</li><li>Developmental Assessments</li></ul>` }
-                },
-                doctor: {
-                    'dr_sarah': { title: 'Dr. Sarah Smith', subtitle: 'Senior Ophthalmologist', img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', content: `<p>Dr. Smith is a renowned expert in refractive surgery and cataract management. She has successfully performed over 10,000 surgeries.</p><p class="mt-4"><strong>Education:</strong> MD Ophthalmology, Harvard Medical School.</p><p class="mt-2"><strong>Availability:</strong> Mon, Wed, Fri (9:00 AM - 4:00 PM)</p>` },
-                    'dr_john': { title: 'Dr. John Doe', subtitle: 'Head of Cardiology', img: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', content: `<p>Dr. Doe specializes in interventional cardiology and preventive heart care. He leads the emergency cardiac team at CarePlus.</p><p class="mt-4"><strong>Education:</strong> DM Cardiology, Johns Hopkins University.</p><p class="mt-2"><strong>Availability:</strong> Tue, Thu, Sat (10:00 AM - 6:00 PM)</p>` },
-                    'dr_emily': { title: 'Dr. Emily Chen', subtitle: 'Dental Surgeon', img: 'https://images.unsplash.com/photo-1594824436998-058d01e6a188?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', content: `<p>Dr. Chen is passionate about cosmetic dentistry and restorative procedures, ensuring every patient leaves with a confident smile.</p><p class="mt-4"><strong>Education:</strong> DDS, University of California, San Francisco.</p><p class="mt-2"><strong>Availability:</strong> Mon to Fri (9:00 AM - 5:00 PM)</p>` },
-                    'dr_michael': { title: 'Dr. Michael Brown', subtitle: 'Orthopedic Specialist', img: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', content: `<p>Dr. Brown is highly skilled in joint replacement and sports medicine. He works closely with athletes to ensure rapid recovery from injuries.</p><p class="mt-4"><strong>Education:</strong> MS Orthopedics, Stanford University.</p><p class="mt-2"><strong>Availability:</strong> Wed, Thu, Fri (8:00 AM - 2:00 PM)</p>` }
-                }
-            };
-
-            const modal = document.getElementById('dynamic-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalSubtitle = document.getElementById('modal-subtitle');
-            const modalBody = document.getElementById('modal-body');
-            const modalVisualContainer = document.getElementById('modal-visual-container');
-            const modalHeader = document.getElementById('modal-header');
-
-            window.openModal = function(type, id) {
-                const data = dataStore[type]?.[id];
-                if(!data) return;
-
-                modalTitle.innerText = data.title;
-                modalSubtitle.innerText = data.subtitle;
-                modalBody.innerHTML = data.content;
-                
-                if (type === 'service') {
-                    modalHeader.style.backgroundImage = 'none';
-                    modalHeader.className = `h-40 w-full relative ${data.bg}`;
-                    modalVisualContainer.innerHTML = `<i class="fa-solid ${data.icon} text-5xl ${data.color}"></i>`;
-                } else if (type === 'doctor') {
-                    modalHeader.className = `h-40 w-full relative bg-gray-900`;
-                    modalHeader.style.backgroundImage = `url('${data.img}')`;
-                    modalHeader.style.backgroundPosition = 'center 20%';
-                    modalHeader.style.backgroundSize = 'cover';
-                    modalVisualContainer.innerHTML = `<img src="${data.img}" class="w-full h-full object-cover" alt="Profile">`;
-                }
-
-                modal.classList.add('active');
-                document.body.classList.add('modal-open');
-            };
-
-            window.closeModal = function() {
-                modal.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            };
-
-            window.closeModalOnBgClick = function(event) {
-                if (event.target === modal) closeModal();
-            };
-
-            // Initialize HOD Location Selector
             initLocationSelector();
         });
 
-        // --- HOD Features Javascript ---
-        
         // Cart Logic
         function addToCart(name, price) {
             cart.push({ id: Date.now(), name, price });
@@ -1163,7 +702,7 @@
             setTimeout(() => { cart = []; updateCartUI(); toggleCart(); }, 2000);
         }
 
-        // HOD Modals & Search
+        // Modals & Search
         function openHODModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
@@ -1181,6 +720,28 @@
                 modal.classList.add('opacity-0');
                 modal.children[0].classList.add('scale-95');
                 setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+
+        function openBigCard(title) {
+            const data = detailsData[title];
+            if (data) {
+                document.getElementById('big-card-title').innerText = title;
+                document.getElementById('big-card-desc').innerText = data.desc;
+                document.getElementById('big-card-price').innerText = "₹" + data.price;
+                document.getElementById('big-card-tag').innerText = data.tag;
+                
+                const iconElement = document.getElementById('big-card-icon');
+                iconElement.className = `fas ${data.icon} text-6xl text-brand-600`;
+
+                document.getElementById('big-card-add-btn').onclick = () => {
+                    addToCart(title, data.price);
+                    closeHODModal('big-card-modal');
+                };
+                
+                openHODModal('big-card-modal');
+            } else {
+                showToast("Details coming soon!", "info");
             }
         }
 
@@ -1239,20 +800,17 @@
                 locSelector.addEventListener('click', (e) => {
                     e.stopPropagation();
                     locDropdown.classList.toggle('hidden');
-                    locIcon.classList.toggle('rotate-180');
                 });
                 locDropdown.querySelectorAll('li').forEach(item => {
                     item.addEventListener('click', (e) => {
                         selectedLocText.textContent = e.target.textContent;
                         locDropdown.classList.add('hidden');
-                        locIcon.classList.remove('rotate-180');
                         showToast(`Location set to ${e.target.textContent}`);
                     });
                 });
                 document.addEventListener('click', (e) => {
                     if (!locSelector.contains(e.target) && !locDropdown.contains(e.target)) {
                         locDropdown.classList.add('hidden');
-                        locIcon.classList.remove('rotate-180');
                     }
                 });
             }
@@ -1286,6 +844,12 @@
             }, 3000);
         }
 
+        window.addEventListener('click', (e) => {
+            ['login-modal', 'big-card-modal'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (e.target === modal) closeHODModal(id);
+            });
+        });
     </script>
 </body>
 </html>
