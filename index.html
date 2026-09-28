@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOD - House of Diagnostics</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e3a8a', // Deep Blue for Dr. OPG
+                        primaryDark: '#172554', // Darker Blue
+                        tealBg: '#0d9488', // Teal accent
+                        lightPink: '#f0f9ff', // Light blue tint for hover states
+                    },
+                    boxShadow: {
+                        'card': '0 4px 15px rgba(0, 0, 0, 0.05)',
+                        'card-hover': '0 10px 25px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for scrolling banner and hide-scrollbar */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Mobile menu transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+        /* New features CSS */
+        #cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+        .toast-enter {
+            animation: slideInRight 0.3s forwards;
+        }
+        .toast-leave {
+            animation: slideOutRight 0.3s forwards;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white relative">
+
+    <!-- Top Scrolling Bar -->
+    <div class="bg-primary text-white text-xs py-1.5 marquee-container flex items-center relative z-50">
+        <div class="marquee-content font-medium">
+            Welcome to <span class="underline font-bold">Dr. OPG Diagnostic Center</span>. High-quality diagnostics at West Jyoti Nagar, Durgapuri Chowk. Get special discounts on selected health packages!
+        </div>
+        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white px-2 cursor-pointer z-10"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Header -->
+    <header id="main-header" class="bg-white shadow-sm sticky top-0 z-40 border-b-2 border-primary transition-shadow duration-300">
+        <div class="max-w-[1400px] mx-auto px-4 py-3 flex flex-wrap md:flex-nowrap items-center justify-between gap-4">
+            
+            <!-- Logo & Mobile Toggle Container -->
+            <div class="flex justify-between items-center w-full md:w-auto">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex flex-col items-center justify-center cursor-pointer">
+                    <div class="text-primary text-3xl font-bold font-serif tracking-wider">Dr.<span class="text-primary font-bold text-3xl mx-1">OPG</span></div>
+                    <div class="text-[9px] tracking-[0.15em] font-medium text-gray-700 uppercase mt-0.5">Diagnostic Center</div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-primary text-2xl focus:outline-none ml-4">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Search & Location -->
+            <div class="flex-grow max-w-2xl w-full mx-auto flex items-center border border-gray-300 rounded-full bg-white overflow-visible shadow-sm focus-within:ring-1 focus-within:ring-primary focus-within:border-primary transition relative order-3 md:order-none mt-3 md:mt-0">
+                
+                <!-- Interactive Location Selector -->
+                <div class="relative">
+                    <div id="location-selector" class="flex items-center px-4 py-2 bg-white cursor-pointer min-w-[140px] rounded-l-full hover:bg-gray-50 transition">
+                        <span id="selected-location" class="text-sm text-gray-700 truncate w-20 md:w-24">West Jyoti Nagar</span>
+                        <i class="fas fa-chevron-down text-gray-400 ml-2 text-xs transition-transform duration-200" id="location-icon"></i>
+                    </div>
+                    <!-- Location Dropdown -->
+                    <div id="location-dropdown" class="hidden absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50 py-2">
+                        <ul class="text-sm text-gray-700">
+                            <li class="px-4 py-2 hover:bg-lightPink hover:text-primary cursor-pointer transition">West Jyoti Nagar</li>
+                            <li class="px-4 py-2 hover:bg-lightPink hover:text-primary cursor-pointer transition">Shahdara</li>
+                            <li class="px-4 py-2 hover:bg-lightPink hover:text-primary cursor-pointer transition">Delhi NCR</li>
+                            <li class="px-4 py-2 hover:bg-lightPink hover:text-primary cursor-pointer transition">Ghaziabad</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="h-6 w-px bg-gray-300"></div>
+                <input type="text" id="main-search-input" placeholder="Search tests, packages..." class="flex-grow px-4 py-2 text-sm focus:outline-none w-full bg-transparent" onkeypress="handleSearch(event)">
+                <button onclick="executeSearch()" class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center mr-1 hover:bg-primaryDark transition flex-shrink-0">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <!-- Contact & Actions -->
+            <div class="flex-shrink-0 flex items-center gap-3 md:gap-5 order-2 md:order-none">
+                <div class="hidden lg:flex items-center text-gray-800 font-bold text-lg">
+                    <i class="fas fa-phone-alt mr-2 text-gray-600"></i>
+                    +91 9911014950
+                </div>
+                <button onclick="toggleCart()" class="text-gray-700 hover:text-primary text-xl hidden sm:block relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-badge-desktop" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
+                </button>
+                <button id="auth-btn-desktop" onclick="openModal('login-modal')" class="border border-gray-300 text-primary font-medium px-4 md:px-5 py-1.5 rounded hover:bg-gray-50 transition text-sm">
+                    Login
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation (Desktop) -->
+        <nav class="max-w-[1400px] mx-auto px-4 hidden md:flex items-center justify-center gap-8 lg:gap-10 py-2 relative">
+            <a href="#" class="text-sm font-semibold text-gray-800 hover:text-primary py-2">Home</a>
+            
+            <!-- Dropdown: Locate Us -->
+            <div class="relative group py-2">
+                <a href="#" class="text-sm font-semibold text-gray-800 hover:text-primary flex items-center gap-1 cursor-default">
+                    Locate Us <i class="fas fa-chevron-down text-[10px] text-primary group-hover:rotate-180 transition-transform"></i>
+                </a>
+                <div class="absolute top-full left-0 mt-0 w-48 bg-white border border-gray-100 rounded-b shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">West Jyoti Nagar Center</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Find Nearest Center</a>
+                </div>
+            </div>
+
+            <!-- Dropdown: Facilities -->
+            <div class="relative group py-2">
+                <a href="#" class="text-sm font-semibold text-gray-800 hover:text-primary flex items-center gap-1 cursor-default">
+                    Facilities <i class="fas fa-chevron-down text-[10px] text-primary group-hover:rotate-180 transition-transform"></i>
+                </a>
+                <div class="absolute top-full left-0 mt-0 w-48 bg-white border border-gray-100 rounded-b shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Pathology Lab</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Digital X-Ray</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Ultrasound</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">CT Scan</a>
+                </div>
+            </div>
+
+            <!-- Dropdown: Find A Test -->
+            <div class="relative group py-2">
+                <a href="#" class="text-sm font-semibold text-gray-800 hover:text-primary flex items-center gap-1 cursor-default">
+                    Find A Test <i class="fas fa-chevron-down text-[10px] text-primary group-hover:rotate-180 transition-transform"></i>
+                </a>
+                <div class="absolute top-full left-0 mt-0 w-48 bg-white border border-gray-100 rounded-b shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Blood Tests</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Imaging Tests</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Specialized Profiles</a>
+                </div>
+            </div>
+
+            <!-- Dropdown: Health Packages -->
+            <div class="relative group py-2">
+                <a href="#" class="text-sm font-semibold text-gray-800 hover:text-primary flex items-center gap-1 cursor-default">
+                    Health Packages <i class="fas fa-chevron-down text-[10px] text-primary group-hover:rotate-180 transition-transform"></i>
+                </a>
+                <div class="absolute top-full left-0 mt-0 w-56 bg-white border border-gray-100 rounded-b shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Whole Body Checkup</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Senior Citizen Packages</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-lightPink hover:text-primary">Women's Health</a>
+                </div>
+            </div>
+
+            <a href="#" class="text-sm font-semibold text-gray-800 hover:text-primary py-2">Reach Us</a>
+            
+            <button onclick="openModal('report-modal')" class="absolute right-4 border border-primary text-primary px-4 py-1 rounded-full text-xs font-bold hover:bg-primary hover:text-white transition">
+                Online Report
+            </button>
+        </nav>
+
+        <!-- Mobile Menu (Collapsible) -->
+        <div id="mobile-menu" class="md:hidden bg-gray-50 border-t border-gray-200 w-full absolute top-full left-0 z-40 shadow-lg">
+            <div class="flex flex-col px-4 py-2">
+                <a href="#" class="py-3 border-b border-gray-200 text-sm font-semibold text-gray-800">Home</a>
+                <a href="#" class="py-3 border-b border-gray-200 text-sm font-semibold text-gray-800">Locate Us</a>
+                <a href="#" class="py-3 border-b border-gray-200 text-sm font-semibold text-gray-800">Facilities</a>
+                <a href="#" class="py-3 border-b border-gray-200 text-sm font-semibold text-gray-800">Find A Test</a>
+                <a href="#" class="py-3 border-b border-gray-200 text-sm font-semibold text-gray-800">Health Packages</a>
+                <a href="#" class="py-3 border-b border-gray-200 text-sm font-semibold text-gray-800">Reach Us</a>
+                <button onclick="openModal('report-modal')" class="mt-4 mb-2 bg-primary text-white py-2 rounded text-sm font-bold w-full">Online Report</button>
+                <button onclick="toggleCart()" class="mb-4 border border-primary text-primary py-2 rounded text-sm font-bold w-full relative">
+                    <i class="fas fa-shopping-cart mr-2"></i> Cart
+                    <span id="cart-badge-mobile" class="absolute top-1 right-1/3 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Actions -->
+    <div class="fixed right-0 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-50 p-2">
+        <a href="#" class="w-12 h-12 bg-white rounded-l-xl shadow-lg border border-r-0 border-gray-200 flex items-center justify-center text-primary text-xl hover:w-14 transition-all duration-300">
+            <i class="fas fa-phone-alt transform -rotate-90"></i>
+        </a>
+        <a href="#" class="w-12 h-12 bg-white rounded-l-xl shadow-lg border border-r-0 border-gray-200 flex items-center justify-center text-green-500 text-2xl hover:w-14 transition-all duration-300">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-tealBg relative overflow-hidden min-h-[450px] flex items-center">
+        <!-- Background Pattern (Subtle) -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        
+        <div class="max-w-[1400px] mx-auto w-full px-4 relative z-10 flex flex-col md:flex-row items-center justify-between">
+            <!-- Left Content -->
+            <div class="w-full md:w-1/2 text-white pt-10 md:pt-0 pb-10 pr-0 md:pr-10">
+                <h1 class="text-4xl md:text-5xl font-medium mb-2 tracking-tight">Experience Care</h1>
+                <p class="text-lg mb-6 font-light opacity-90">Find Tests, Health Checkups and Centres Near You.</p>
+                
+                <div class="relative max-w-lg mb-4">
+                    <input type="text" id="hero-search-input" placeholder="Search" class="w-full py-3.5 px-5 rounded bg-white text-gray-800 text-sm focus:outline-none pr-14 shadow-lg" onkeypress="if(event.key === 'Enter') showToast('Searching for: ' + this.value)">
+                    <button onclick="showToast('Searching for: ' + document.getElementById('hero-search-input').value)" class="absolute right-0 top-0 bottom-0 bg-primary text-white w-14 rounded-r flex items-center justify-center hover:bg-primaryDark transition">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                </div>
+                
+                <p class="text-sm mb-3 font-medium">Can't find your test? Upload Prescription & Get Callback!</p>
+                <input type="file" id="prescription-upload" class="hidden" accept="image/*,.pdf" onchange="handlePrescriptionUpload(event)">
+                <button onclick="document.getElementById('prescription-upload').click()" class="bg-white text-gray-800 font-bold py-2.5 px-6 rounded inline-flex items-center shadow-lg hover:bg-gray-100 transition text-sm">
+                    <i class="fas fa-cloud-upload-alt text-primary mr-2 text-lg"></i> Upload Prescription
+                </button>
+            </div>
+            
+            <!-- Right Content (Image & Card) -->
+            <div class="w-full md:w-1/2 relative h-[350px] md:h-[450px]">
+                <!-- Woman Image -->
+                <img src="https://images.unsplash.com/photo-1584820927498-cafece8c3076?auto=format&fit=crop&w=800&q=80" alt="Sick patient taking temperature" class="absolute bottom-0 right-10 h-[90%] object-cover object-top mask-image opacity-80 mix-blend-luminosity">
+                
+                <!-- Floating Package Card -->
+                <div class="absolute top-1/2 right-0 md:right-10 transform -translate-y-1/2 bg-white rounded-3xl shadow-2xl w-[320px] md:w-[380px] overflow-hidden">
+                    <div class="p-6 flex items-start gap-4">
+                        <div class="relative w-8 h-20 bg-gray-100 rounded-full border border-gray-300 flex justify-center pt-2">
+                            <div class="w-2 h-14 bg-red-500 rounded-full mt-2"></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-red-500 absolute -bottom-4 bg-white flex items-center justify-center shadow-sm">
+                                <div class="w-8 h-8 rounded-full bg-red-500"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="text-primary text-4xl font-black leading-tight tracking-tight mt-1">Fever</h2>
+                            <h3 class="text-black text-2xl font-bold tracking-tight">Health Package</h3>
+                        </div>
+                    </div>
+                    <div class="bg-primary text-white p-5 text-center shadow-inner rounded-3xl -ml-2 -mr-2 relative z-10 bottom-[-5px]">
+                        <p class="text-xl font-light">Is it just a fever?</p>
+                        <p class="text-xl font-medium">Find out the cause.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore More Section -->
+    <section class="max-w-[1400px] mx-auto px-4 py-16">
+        <h2 class="text-2xl font-bold text-black mb-8">Explore More</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white border border-gray-200 rounded p-4 flex items-center cursor-pointer hover:border-primary shadow-sm hover:shadow-card-hover transition group">
+                <div class="w-12 flex justify-center text-primary text-2xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-search-plus"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="font-bold text-gray-900 text-sm">Find a Test</h3>
+                    <p class="text-xs text-gray-500 mt-1">View Tests and Prices</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white border border-gray-200 rounded p-4 flex items-center cursor-pointer hover:border-primary shadow-sm hover:shadow-card-hover transition group">
+                <div class="w-12 flex justify-center text-primary text-2xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="font-bold text-gray-900 text-sm">Home Collection</h3>
+                    <p class="text-xs text-gray-500 mt-1">Book Home Collection</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white border border-gray-200 rounded p-4 flex items-center cursor-pointer hover:border-primary shadow-sm hover:shadow-card-hover transition group">
+                <div class="w-12 flex justify-center text-primary text-2xl group-hover:scale-110 transition-transform">
+                    <i class="far fa-hospital"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="font-bold text-gray-900 text-sm">Locate Centres</h3>
+                    <p class="text-xs text-gray-500 mt-1">Find Centres near you</p>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white border border-gray-200 rounded p-4 flex items-center cursor-pointer hover:border-primary shadow-sm hover:shadow-card-hover transition group">
+                <div class="w-12 flex justify-center text-primary text-2xl group-hover:scale-110 transition-transform">
+                    <i class="fas fa-notes-medical"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="font-bold text-gray-900 text-sm">Health Packages</h3>
+                    <p class="text-xs text-gray-500 mt-1">Whole Body Health Checkup</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section class="bg-gray-50 py-16">
+        <div class="max-w-[1400px] mx-auto px-4 relative">
+            <h2 class="text-2xl font-bold text-black mb-8">Announcements</h2>
+            
+            <!-- Custom Carousel Navigation -->
+            <button onclick="scrollCarousel('announcements', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 -ml-4 z-10 w-10 h-10 bg-blue-100 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition shadow-md">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="scrollCarousel('announcements', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 -mr-4 z-10 w-10 h-10 bg-blue-100 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition shadow-md">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div id="announcements-carousel" class="flex overflow-x-auto hide-scroll gap-6 pb-4 snap-x snap-mandatory scroll-smooth">
+                <!-- Announce Card 1 -->
+                <div class="min-w-[300px] md:min-w-[380px] bg-white rounded-xl overflow-hidden shadow-card snap-start flex flex-col flex-1">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://placehold.co/600x400/2a2a2a/ffffff?text=Advanced+Equipment" alt="Clinic" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">State-of-the-Art Laboratory</h3>
+                        <p class="text-sm text-gray-600 mb-6 flex-grow">Advanced diagnostics under one roof at Jyoti Nagar</p>
+                        <button class="bg-primary text-white font-bold py-2.5 px-6 rounded w-max hover:bg-primaryDark transition text-sm">
+                            Know More
+                        </button>
+                    </div>
+                </div>
+                <!-- Announce Card 2 -->
+                <div class="min-w-[300px] md:min-w-[380px] bg-white rounded-xl overflow-hidden shadow-card snap-start flex flex-col flex-1">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://placehold.co/600x400/eeeeee/333333?text=Home+Collection" alt="Clinic" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Free Home Collection</h3>
+                        <p class="text-sm text-gray-600 mb-6 flex-grow">Book tests comfortably from your home.</p>
+                        <button class="bg-primary text-white font-bold py-2.5 px-6 rounded w-max hover:bg-primaryDark transition text-sm">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                <!-- Announce Card 3 -->
+                <div class="min-w-[300px] md:min-w-[380px] bg-white rounded-xl overflow-hidden shadow-card snap-start flex flex-col flex-1">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://placehold.co/600x400/f5f5f5/1e3a8a?text=Digital+X-Ray" alt="Clinic" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Digital X-Ray & OPG</h3>
+                        <p class="text-sm text-gray-600 mb-6 flex-grow">High resolution imaging services now available.</p>
+                        <button class="bg-primary text-white font-bold py-2.5 px-6 rounded w-max hover:bg-primaryDark transition text-sm">
+                            View Services
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Tests Section -->
+    <section class="max-w-[1400px] mx-auto px-4 py-16 relative">
+        <h2 class="text-2xl font-bold text-black mb-8">Popular Tests</h2>
+        
+        <button onclick="scrollCarousel('popular-tests', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 -ml-4 z-10 w-10 h-10 bg-blue-100 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition shadow-md">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="scrollCarousel('popular-tests', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 -mr-4 z-10 w-10 h-10 bg-blue-100 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition shadow-md">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div id="popular-tests-carousel" class="flex overflow-x-auto hide-scroll gap-6 pb-4 snap-x snap-mandatory scroll-smooth">
+            
+            <!-- Test Card 1 -->
+            <div class="min-w-[280px] md:min-w-[350px] rounded-[1.5rem] overflow-hidden shadow-card snap-start flex-1 border border-gray-100 bg-white">
+                <div class="bg-primary text-white p-6 pb-8 flex justify-between items-start rounded-t-[1.5rem]">
+                    <h3 class="font-bold text-lg w-2/3 leading-tight">Thyroid Profile (T3, T4, TSH)</h3>
+                    <div class="font-bold text-lg">₹399</div>
+                </div>
+                <div class="p-6 bg-white -mt-4 rounded-t-[1.5rem] relative">
+                    <div class="flex gap-4 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                            <i class="fas fa-microscope text-gray-400 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-black">3 Parameters</div>
+                                <div class="text-xs">Included</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                            <i class="far fa-calendar-alt text-gray-400 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-black">Report TAT</div>
+                                <div class="text-xs">Same Day*</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full border border-primary text-primary font-bold py-2.5 rounded hover:bg-lightPink transition text-sm text-center">
+                        KNOW MORE
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test Card 2 -->
+            <div class="min-w-[280px] md:min-w-[350px] rounded-[1.5rem] overflow-hidden shadow-card snap-start flex-1 border border-gray-100 bg-white">
+                <div class="bg-primary text-white p-6 pb-8 flex justify-between items-start rounded-t-[1.5rem]">
+                    <h3 class="font-bold text-lg w-2/3 leading-tight">CRP (C-Reactive Protein)</h3>
+                    <div class="font-bold text-lg">₹299</div>
+                </div>
+                <div class="p-6 bg-white -mt-4 rounded-t-[1.5rem] relative">
+                    <div class="flex gap-4 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                            <i class="fas fa-microscope text-gray-400 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-black">1 Parameter</div>
+                                <div class="text-xs">Included</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                            <i class="far fa-calendar-alt text-gray-400 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-black">Report TAT</div>
+                                <div class="text-xs">Same Day*</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full border border-primary text-primary font-bold py-2.5 rounded hover:bg-lightPink transition text-sm text-center">
+                        KNOW MORE
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test Card 3 -->
+            <div class="min-w-[280px] md:min-w-[350px] rounded-[1.5rem] overflow-hidden shadow-card snap-start flex-1 border border-gray-100 bg-white">
+                <div class="bg-primary text-white p-6 pb-8 flex justify-between items-start rounded-t-[1.5rem]">
+                    <h3 class="font-bold text-lg w-2/3 leading-tight">X-Ray Chest PA View</h3>
+                    <div class="font-bold text-lg">₹350</div>
+                </div>
+                <div class="p-6 bg-white -mt-4 rounded-t-[1.5rem] relative">
+                    <div class="flex gap-4 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                            <i class="fas fa-x-ray text-gray-400 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-black">1 View</div>
+                                <div class="text-xs">Included</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                            <i class="far fa-calendar-alt text-gray-400 text-lg"></i>
+                            <div>
+                                <div class="font-bold text-black">Report TAT</div>
+                                <div class="text-xs">Same Day*</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-full border border-primary text-primary font-bold py-2.5 rounded hover:bg-lightPink transition text-sm text-center">
+                        KNOW MORE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Packages Section -->
+    <section class="bg-gray-50 py-16">
+        <div class="max-w-[1400px] mx-auto px-4 relative">
+            <h2 class="text-2xl font-bold text-black mb-8">Health Packages</h2>
+            
+            <button onclick="scrollCarousel('health-packages', -1)" class="absolute left-0 top-[55%] transform -translate-y-1/2 -ml-4 z-10 w-10 h-10 bg-blue-100 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition shadow-md">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="scrollCarousel('health-packages', 1)" class="absolute right-0 top-[55%] transform -translate-y-1/2 -mr-4 z-10 w-10 h-10 bg-red-100 text-primary rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition shadow-md">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div id="health-packages-carousel" class="flex overflow-x-auto hide-scroll gap-6 pb-4 snap-x snap-mandatory scroll-smooth">
+                
+                <!-- Package Card 1 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-xl p-6 shadow-card snap-start flex-1 border border-gray-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-black w-2/3 leading-tight">Total Care Checkup</h3>
+                            <span class="border border-primary text-primary text-[10px] uppercase font-bold px-3 py-1 rounded-full whitespace-nowrap">Health Checkup</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-6">Packages</p>
+                        
+                        <div class="flex gap-4 mb-8">
+                            <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                                <i class="fas fa-microscope text-gray-400 text-lg"></i>
+                                <div>
+                                    <div class="font-bold text-black">87 Parameters</div>
+                                    <div class="text-xs">Included</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                                <i class="far fa-calendar-alt text-gray-400 text-lg"></i>
+                                <div>
+                                    <div class="font-bold text-black">Report TAT</div>
+                                    <div class="text-xs">Same Day*</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                        <div class="font-bold text-xl text-black">₹1999</div>
+                        <button class="bg-primary text-white font-bold py-2 px-5 rounded hover:bg-primaryDark transition text-sm">
+                            Read More
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Package Card 2 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-xl p-6 shadow-card snap-start flex-1 border border-gray-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-black w-2/3 leading-tight">Senior Citizen Checkup - Male</h3>
+                            <span class="border border-primary text-primary text-[10px] uppercase font-bold px-3 py-1 rounded-full whitespace-nowrap">Health Checkup</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-6">Packages</p>
+                        
+                        <div class="flex gap-4 mb-8">
+                            <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                                <i class="fas fa-microscope text-gray-400 text-lg"></i>
+                                <div>
+                                    <div class="font-bold text-black">99 Parameters</div>
+                                    <div class="text-xs">Included</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                                <i class="far fa-calendar-alt text-gray-400 text-lg"></i>
+                                <div>
+                                    <div class="font-bold text-black">Report TAT</div>
+                                    <div class="text-xs">Same Day*</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                        <div class="font-bold text-xl text-black">₹4999</div>
+                        <button class="bg-primary text-white font-bold py-2 px-5 rounded hover:bg-primaryDark transition text-sm">
+                            Read More
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Package Card 3 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-xl p-6 shadow-card snap-start flex-1 border border-gray-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-black w-2/3 leading-tight">Senior Citizen Checkup - Female</h3>
+                            <span class="border border-primary text-primary text-[10px] uppercase font-bold px-3 py-1 rounded-full whitespace-nowrap">Health Checkup</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-6">Packages</p>
+                        
+                        <div class="flex gap-4 mb-8">
+                            <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                                <i class="fas fa-microscope text-gray-400 text-lg"></i>
+                                <div>
+                                    <div class="font-bold text-black">97 Parameters</div>
+                                    <div class="text-xs">Included</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-700 w-1/2">
+                                <i class="far fa-calendar-alt text-gray-400 text-lg"></i>
+                                <div>
+                                    <div class="font-bold text-black">Report TAT</div>
+                                    <div class="text-xs">Same Day*</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                        <div class="font-bold text-xl text-black">₹4999</div>
+                        <button class="bg-primary text-white font-bold py-2 px-5 rounded hover:bg-primaryDark transition text-sm">
+                            Read More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="max-w-[1400px] mx-auto px-4 py-16">
+        <h2 class="text-2xl font-bold text-black mb-8">Facilities</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Facility 1 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 cursor-pointer hover:shadow-card-hover transition">
+                <div class="relative h-44 bg-gray-100">
+                    <img src="https://placehold.co/400x300/e0e0e0/333333?text=Lab+Equipment" alt="Pathology Lab" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded shadow">Pathology</div>
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-gray-900 text-base">Pathology Lab</h3>
+                </div>
+            </div>
+            
+            <!-- Facility 2 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 cursor-pointer hover:shadow-card-hover transition">
+                <div class="relative h-44 bg-gray-100">
+                    <img src="https://placehold.co/400x300/e0e0e0/333333?text=CT+Scan+Machine" alt="CT Scan" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded shadow">Radiology</div>
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-gray-900 text-base">CT Scan</h3>
+                </div>
+            </div>
+
+            <!-- Facility 3 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 cursor-pointer hover:shadow-card-hover transition">
+                <div class="relative h-44 bg-gray-100">
+                    <img src="https://placehold.co/400x300/e0e0e0/333333?text=X-Ray" alt="X-Ray" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded shadow">Radiology</div>
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-gray-900 text-base">X-Ray</h3>
+                </div>
+            </div>
+
+            <!-- Facility 4 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 cursor-pointer hover:shadow-card-hover transition">
+                <div class="relative h-44 bg-gray-100">
+                    <img src="https://placehold.co/400x300/e0e0e0/333333?text=Ultrasound" alt="Ultrasound" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded shadow">Radiology</div>
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="font-bold text-gray-900 text-base">Ultrasound</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="bg-gray-50 py-16">
+        <div class="max-w-[1400px] mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold text-black mb-10">Why Choose <span class="text-primary">Us</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Reason 1 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 flex flex-col items-center">
+                    <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">Fast & Accurate Results</h3>
+                    <p class="text-sm text-gray-500">Quick sample collection and precise reports.</p>
+                </div>
+                <!-- Reason 2 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 flex flex-col items-center">
+                    <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-3xl mb-6 shadow-lg">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">Trusted & Ethical</h3>
+                    <p class="text-sm text-gray-500">Committed to transparency, integrity, and patient care.</p>
+                </div>
+                <!-- Reason 3 -->
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200 flex flex-col items-center">
+                    <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl mb-6 shadow-lg">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">Affordable</h3>
+                    <p class="text-sm text-gray-500">Premium diagnostic services at highly competitive prices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-white pt-16 pb-8 border-t border-gray-100">
+        <div class="max-w-[1400px] mx-auto px-4 flex flex-col lg:flex-row gap-12">
+            <!-- Quick Links -->
+            <div class="lg:w-[45%]">
+                <h3 class="font-bold text-black text-lg mb-6">Quick Links</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-3">
+                    <!-- Column 1 -->
+                    <div class="flex flex-col gap-3">
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">About Us</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Press Release</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Corporate Enquiry</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Online Offers</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Refund Policy</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Careers</a>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="flex flex-col gap-3">
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Affordable Pricing</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Blog</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Franchise Enquiry</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Privacy</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Statutory Compliance</a>
+                    </div>
+                    <!-- Column 3 -->
+                    <div class="flex flex-col gap-3">
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Media Gallery</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Contact Us</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Spaces</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Terms of Use</a>
+                        <a href="#" class="text-sm text-gray-800 hover:text-primary transition-colors">Policy</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact & Address -->
+            <div class="lg:w-[55%] flex flex-col md:flex-row gap-8">
+                <div class="flex-1">
+                    <h3 class="font-bold text-black text-lg mb-6">Contact Us</h3>
+                    <div class="flex flex-col gap-4 text-gray-800 text-sm">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-primary mt-1 text-lg"></i>
+                            <p class="leading-relaxed">
+                                <strong>Dr. OPG Diagnostic Center</strong><br>
+                                B-7, Loni Rd, near Bank of Baroda,<br>
+                                near Durgapuri Chowk, West Jyoti Nagar,<br>
+                                Shahdara, Delhi, 110093
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3 mt-2">
+                            <i class="fas fa-phone-alt text-primary text-lg"></i>
+                            <p class="font-bold">+91 9911014950</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-primary text-lg"></i>
+                            <p>info@dropgdiagnostic.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-black text-lg mb-6">Working Hours</h3>
+                    <div class="flex flex-col gap-2 text-gray-800 text-sm">
+                        <div class="flex justify-between border-b border-gray-100 py-2">
+                            <span>Monday - Saturday</span>
+                            <span class="font-bold">8:00 AM - 9:00 PM</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-100 py-2">
+                            <span>Sunday</span>
+                            <span class="font-bold">8:00 AM - 2:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="max-w-[1400px] mx-auto px-4 mt-12 mb-8">
+            <hr class="border-t border-dashed border-gray-400">
+        </div>
+
+        <!-- Bottom Footer Logo & Socials -->
+        <div class="max-w-[1400px] mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6 pb-6">
+            <!-- Logo -->
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="text-primary text-3xl font-bold font-serif tracking-wider">Dr.<span class="text-primary font-bold text-3xl mx-1">OPG</span></div>
+                <div class="text-[9px] tracking-[0.15em] font-medium text-gray-700 uppercase mt-0.5">Diagnostic Center</div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="text-sm text-black font-medium text-center">
+                Dr. OPG Diagnostic Center - Copyrights 2026, All Rights Reserved
+            </div>
+            
+            <!-- Socials -->
+            <div class="flex flex-col items-center md:items-end">
+                <span class="font-bold text-sm text-black mb-2">Follow Us</span>
+                <div class="flex gap-4 text-primary text-xl">
+                    <a href="#" class="hover:text-primaryDark transition-colors"><i class="fab fa-facebook-square"></i></a>
+                    <a href="#" class="hover:text-primaryDark transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-primaryDark transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-primaryDark transition-colors"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="hover:text-primaryDark transition-colors"><i class="fab fa-pinterest"></i></a>
+                    <a href="#" class="hover:text-primaryDark transition-colors"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Cart Sidebar -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[110] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[120] shadow-2xl flex flex-col">
+        <div class="bg-primary text-white p-4 flex justify-between items-center">
+            <h2 class="text-lg font-bold flex items-center"><i class="fas fa-shopping-cart mr-2"></i> Your Cart</h2>
+            <button onclick="toggleCart()" class="text-white hover:text-gray-200"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto p-4 flex flex-col gap-4">
+            <!-- Items injected by JS -->
+            <div class="text-center text-gray-500 mt-10">Your cart is empty</div>
+        </div>
+        <div class="border-t border-gray-200 p-4 bg-gray-50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold text-gray-700">Total Amount:</span>
+                <span id="cart-total" class="font-bold text-xl text-black">₹0</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-primary hover:bg-primaryDark text-white font-bold py-3 rounded transition shadow-md">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-24 right-4 z-[150] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 transform scale-95 transition-transform duration-300 relative overflow-hidden">
+            <div class="bg-primary text-white py-4 px-6 flex justify-between items-center">
+                <h2 id="login-title" class="text-xl font-bold">Login to Dr. OPG</h2>
+                <button onclick="closeModal('login-modal')" class="text-white hover:text-gray-200 focus:outline-none"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            <div class="p-6">
+                <form id="login-form" onsubmit="handleAuth(event)">
+                    <div id="mobile-input-group" class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="mobile">Mobile Number</label>
+                        <input class="shadow appearance-none border rounded w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="mobile" type="tel" placeholder="Enter your 10-digit mobile number" required pattern="[0-9]{10}">
+                    </div>
+                    <div id="otp-input-group" class="mb-4 hidden">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="otp">Enter OTP</label>
+                        <input class="shadow appearance-none border rounded w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="otp" type="text" placeholder="Enter 4-digit OTP" pattern="[0-9]{4}">
+                        <p class="text-xs text-green-600 mt-1">OTP sent successfully to your mobile.</p>
+                    </div>
+                    <button id="auth-submit-btn" type="submit" class="bg-primary hover:bg-primaryDark text-white font-bold py-2.5 px-4 rounded w-full transition duration-200 mt-2">
+                        Get OTP
+                    </button>
+                    <p class="text-center text-sm text-gray-500 mt-4">New User? <a href="#" class="text-primary font-semibold hover:underline">Register Here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Online Report Modal -->
+    <div id="report-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 transform scale-95 transition-transform duration-300 relative overflow-hidden">
+            <div class="bg-primary text-white py-4 px-6 flex justify-between items-center">
+                <h2 class="text-xl font-bold">Download Online Report</h2>
+                <button onclick="closeModal('report-modal')" class="text-white hover:text-gray-200 focus:outline-none"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            <div class="p-6">
+                <form id="report-form" onsubmit="handleReportDownload(event)">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="patient-id">Patient ID / UHID</label>
+                        <input class="shadow appearance-none border rounded w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="patient-id" type="text" placeholder="e.g. OPG123456" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                        <input class="shadow appearance-none border rounded w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="password" type="password" placeholder="Enter password printed on receipt" required>
+                    </div>
+                    <button type="submit" class="bg-primary hover:bg-primaryDark text-white font-bold py-2.5 px-4 rounded w-full transition duration-200">
+                        View Report
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        // --- State Management ---
+        let cart = [];
+        let authState = { step: 'mobile', isLoggedIn: false };
+
+        // --- Core UI Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initLocationSelector();
+            initMobileMenu();
+            initStickyHeader();
+            bindDynamicButtons(); 
+        });
+
+        // --- Feature: Dynamic Button Binding ---
+        function bindDynamicButtons() {
+            // Find tests and map the UI button into a functional 'Add to cart'
+            document.querySelectorAll('#popular-tests-carousel .snap-start').forEach(card => {
+                const title = card.querySelector('h3').innerText;
+                const priceText = card.querySelector('.font-bold.text-lg:not(h3)').innerText;
+                const price = parseInt(priceText.replace('₹', '').replace(',', ''));
+                const btn = card.querySelector('button');
+                btn.innerText = "ADD TO CART";
+                btn.onclick = () => addToCart(title, price);
+            });
+            // Map package buttons
+            document.querySelectorAll('#health-packages-carousel .snap-start').forEach(card => {
+                const title = card.querySelector('h3').innerText;
+                const priceText = card.querySelector('.font-bold.text-xl').innerText;
+                const price = parseInt(priceText.replace('₹', '').replace(',', ''));
+                const btn = card.querySelector('button');
+                btn.innerText = "ADD TO CART";
+                btn.onclick = () => addToCart(title, price);
+            });
+        }
+
+
+        // --- Feature: Cart System ---
+        function addToCart(name, price) {
+            cart.push({ id: Date.now(), name, price });
+            updateCartUI();
+            showToast(`Added ${name} to cart!`, 'success');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            // Update badges
+            const desktopBadge = document.getElementById('cart-badge-desktop');
+            const mobileBadge = document.getElementById('cart-badge-mobile');
+            const count = cart.length;
+            
+            if (count > 0) {
+                desktopBadge.innerText = count;
+                desktopBadge.classList.remove('hidden');
+                mobileBadge.innerText = count;
+                mobileBadge.classList.remove('hidden');
+            } else {
+                desktopBadge.classList.add('hidden');
+                mobileBadge.classList.add('hidden');
+            }
+
+            // Update sidebar content
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="text-center text-gray-500 mt-10">Your cart is empty</div>';
+                cartTotal.innerText = '₹0';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                html += `
+                    <div class="bg-white border border-gray-200 p-3 rounded shadow-sm flex justify-between items-center">
+                        <div class="w-3/4">
+                            <h4 class="text-sm font-bold text-gray-800 line-clamp-2">${item.name}</h4>
+                            <div class="text-primary font-bold mt-1">₹${item.price}</div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 bg-red-50 w-8 h-8 rounded flex items-center justify-center transition">
+                            <i class="fas fa-trash-alt text-sm"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            cartItemsContainer.innerHTML = html;
+            cartTotal.innerText = `₹${total}`;
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            } else {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                sidebar.classList.add('open');
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast("Cart is empty!", "error");
+                return;
+            }
+            if (!authState.isLoggedIn) {
+                toggleCart();
+                openModal('login-modal');
+                showToast("Please login to proceed to checkout", "info");
+                return;
+            }
+            showToast("Redirecting to secure payment gateway...", "success");
+            setTimeout(() => { cart = []; updateCartUI(); toggleCart(); }, 2000);
+        }
+
+
+        // --- Feature: Search & Upload ---
+        function executeSearch() {
+            const input = document.getElementById('main-search-input');
+            if(input.value.trim() !== '') {
+                showToast(`Searching directory for: ${input.value}`);
+                input.value = '';
+            }
+        }
+
+        function handleSearch(e) {
+            if (e.key === 'Enter') executeSearch();
+        }
+
+        function handlePrescriptionUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                showToast(`Prescription "${file.name}" uploaded successfully! Our team will contact you.`, 'success');
+                e.target.value = ''; // Reset input to allow re-upload
+            }
+        }
+
+
+        // --- Feature: Authentication Simulation ---
+        function handleAuth(e) {
+            e.preventDefault();
+            const btn = document.getElementById('auth-submit-btn');
+            const mobileInput = document.getElementById('mobile-input-group');
+            const otpInput = document.getElementById('otp-input-group');
+            
+            if (authState.step === 'mobile') {
+                // Simulate OTP send delay
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                setTimeout(() => {
+                    authState.step = 'otp';
+                    mobileInput.classList.add('hidden');
+                    otpInput.classList.remove('hidden');
+                    document.getElementById('otp').required = true;
+                    btn.innerHTML = 'Verify & Login';
+                    showToast("OTP sent successfully", "success");
+                }, 800);
+            } else if (authState.step === 'otp') {
+                // Simulate verification delay
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+                setTimeout(() => {
+                    authState.isLoggedIn = true;
+                    closeModal('login-modal');
+                    document.getElementById('auth-btn-desktop').innerHTML = '<i class="fas fa-user mr-2"></i> Profile';
+                    showToast("Successfully logged in!", "success");
+                    // Reset modal state for future logouts
+                    setTimeout(() => {
+                        authState.step = 'mobile';
+                        mobileInput.classList.remove('hidden');
+                        otpInput.classList.add('hidden');
+                        btn.innerHTML = 'Get OTP';
+                        document.getElementById('login-form').reset();
+                    }, 500);
+                }, 1000);
+            }
+        }
+
+        // --- Feature: Report Download Simulation ---
+        function handleReportDownload(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching Report...';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                closeModal('report-modal');
+                showToast("Report found! Secure download started.", "success");
+                e.target.reset();
+            }, 1500);
+        }
+
+
+        // --- Utility: Toast Notifications ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-gray-800';
+            let icon = 'fa-info-circle';
+            if (type === 'success') { bgClass = 'bg-green-600'; icon = 'fa-check-circle'; }
+            if (type === 'error') { bgClass = 'bg-red-600'; icon = 'fa-exclamation-circle'; }
+            
+            toast.className = `${bgClass} text-white px-4 py-3 rounded shadow-lg flex items-center gap-3 toast-enter min-w-[250px] pointer-events-auto`;
+            toast.innerHTML = `<i class="fas ${icon}"></i> <span class="text-sm font-medium">${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.replace('toast-enter', 'toast-leave');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- Existing UI Logic ---
+        function scrollCarousel(id, direction) {
+            const container = document.getElementById(id + '-carousel');
+            if (container) {
+                const scrollAmount = window.innerWidth < 768 ? 300 : 400; 
+                container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        function initLocationSelector() {
+            const locSelector = document.getElementById('location-selector');
+            const locDropdown = document.getElementById('location-dropdown');
+            const locIcon = document.getElementById('location-icon');
+            const selectedLocText = document.getElementById('selected-location');
+
+            if (locSelector && locDropdown) {
+                locSelector.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    locDropdown.classList.toggle('hidden');
+                    locIcon.classList.toggle('rotate-180');
+                });
+                locDropdown.querySelectorAll('li').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        selectedLocText.textContent = e.target.textContent;
+                        locDropdown.classList.add('hidden');
+                        locIcon.classList.remove('rotate-180');
+                        showToast(`Location set to ${e.target.textContent}`);
+                    });
+                });
+                document.addEventListener('click', (e) => {
+                    if (!locSelector.contains(e.target) && !locDropdown.contains(e.target)) {
+                        locDropdown.classList.add('hidden');
+                        locIcon.classList.remove('rotate-180');
+                    }
+                });
+            }
+        }
+
+        function initMobileMenu() {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                    const icon = mobileBtn.querySelector('i');
+                    if (mobileMenu.classList.contains('open')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+        }
+
+        function initStickyHeader() {
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    header.classList.add('shadow-md');
+                    header.classList.remove('shadow-sm');
+                } else {
+                    header.classList.remove('shadow-md');
+                    header.classList.add('shadow-sm');
+                }
+            });
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.children[0].classList.remove('scale-95');
+                }, 10);
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('opacity-0');
+                modal.children[0].classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+
+        window.addEventListener('click', (e) => {
+            ['login-modal', 'report-modal'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (e.target === modal) closeModal(id);
+            });
+        });
+    </script>
+</body>
+</html>
