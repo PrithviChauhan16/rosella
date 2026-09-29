@@ -11,12 +11,27 @@
 #wa-button { touch-action: none; }
 
 /* Modal and Big Card animations */
-.custom-modal { transition: opacity 0.3s ease, visibility 0.3s ease; }
-.custom-modal .modal-content { transition: transform 0.3s ease; transform: scale(0.97) translateY(10px); }
-.custom-modal.active { opacity: 1; visibility: visible; }
-.custom-modal.active .modal-content { transform: scale(1) translateY(0); }
+.custom-modal { 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease; 
+}
+.custom-modal .modal-content { 
+    transition: transform 0.25s ease; 
+    transform: scale(0.96) translateY(8px); 
+}
+.custom-modal.active { 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+}
+.custom-modal.active .modal-content { 
+    transform: scale(1) translateY(0); 
+}
 
-body.modal-open { overflow: hidden; }
+/* Prevent screen jumping when locked */
+body.modal-open { 
+    overflow: hidden; 
+}
 
 /* Marquee scrolling banner */
 .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; }
